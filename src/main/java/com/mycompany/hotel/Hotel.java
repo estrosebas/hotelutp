@@ -18,10 +18,11 @@ public class Hotel {
     private static GestorHabitaciones gestorHabitaciones = new GestorHabitaciones();
 
     public static void main(String[] args) {
-        mostrarMenu();
+        mostrarMenuHabitaciones();
     }
 
-    private static void mostrarMenu() {
+    private static void mostrarMenuHabitaciones() 
+    {
         int opcion = 0;
         do {
             System.out.println("=== Menú de Mantenimiento de Habitaciones ===");
@@ -61,7 +62,8 @@ public class Hotel {
         } while (opcion != 0);
     }
 
-    private static void buscarHabitacion() {
+    private static void buscarHabitacion() 
+    {
         System.out.print("Ingrese el número de habitación a buscar: ");
         int numero = scanner.nextInt();
         scanner.nextLine(); // Consumir el salto de línea
@@ -73,7 +75,8 @@ public class Hotel {
         }
     }
 
-    private static void insertarHabitacion() {
+    private static void insertarHabitacion() 
+    {
         System.out.print("Ingrese el número de habitación: ");
         int numero = scanner.nextInt();
         scanner.nextLine(); // Consumir el salto de línea
@@ -90,7 +93,8 @@ public class Hotel {
         System.out.println("La habitación ha sido insertada exitosamente.");
     }
 
-    private static void modificarHabitacion() {
+    private static void modificarHabitacion() 
+    {
         System.out.print("Ingrese el número de habitación a modificar: ");
         int numero = scanner.nextInt();
         scanner.nextLine(); // Consumir el salto de línea
@@ -111,7 +115,8 @@ public class Hotel {
         }
     }
 
-    private static void eliminarHabitacion() {
+    private static void eliminarHabitacion() 
+    {
         System.out.print("Ingrese el número de habitación a eliminar: ");
         int numero = scanner.nextInt();
         scanner.nextLine(); // Consumir el salto de línea
