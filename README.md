@@ -16,3 +16,22 @@ Este proyecto es una aplicación de consola en Java para el mantenimiento de hab
 
    ```bash
    git clone https://github.com/estrosebas/mantenimiento-habitaciones.git
+2. Abre el proyecto en tu entorno de desarrollo de Java preferido.
+
+3. Ejecuta la clase Hotel para iniciar la aplicación.
+
+4. Sigue las instrucciones en la consola para utilizar las diferentes opciones del menú.
+
+## Requisitos del sistema
+- Java Development Kit (JDK) 8 o superior.
+## Estructura del proyecto
+- Habitacion.java: Clase que representa una habitación con sus atributos y métodos.
+- GestorHabitaciones.java: Clase que gestiona las operaciones de mantenimiento de las habitaciones y el archivo CSV.
+- Main.java: Clase principal que contiene el menú y las interacciones con el usuario.
+
+## Autores :black_nib:
+Diego Sebastian Gonzales Gomez - codificación
+
+## Licencia
+Este proyecto está bajo la Licencia MIT.
+
