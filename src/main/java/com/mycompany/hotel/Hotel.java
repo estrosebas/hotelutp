@@ -18,10 +18,10 @@ public class Hotel {
     private static GestorHabitaciones gestorHabitaciones = new GestorHabitaciones();
 
     public static void main(String[] args) {
-        mostrarMenuHabitaciones();
+        mostrarMenu();
     }
 
-    private static void mostrarMenuHabitaciones() 
+    private static void mostrarMenu() 
     {
         int opcion = 0;
         do {
