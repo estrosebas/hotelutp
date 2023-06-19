@@ -9,6 +9,8 @@ package com.mycompany.hotel;
  * @author Sebas
  */
 import java.util.Scanner;
+
+import libreria.Cliente;
 //import libreria.cuartos;
 import libreria.GestorHabitaciones;
 import libreria.Habitacion;
@@ -21,37 +23,34 @@ public class Hotel {
         //mostrarMenuHabitaciones();
         MenuGeneral();
     }
-    private static void MenuGeneral()
-    {
-        int MenuGeneralOption = 0;
-        do {
-            System.out.println("===    Hotel UTP    ===");
-            System.out.println("1. Modulo Habitaciones");
-            System.out.println("2. --------------------");
-            System.out.println("3. --------------------");
-            System.out.println("4. --------------------");
-            System.out.println("5. --------------------");
-            System.out.println("0. Salir");
-            System.out.print("Seleccione una opción: ");
-            MenuGeneralOption = scanner.nextInt();
-            scanner.nextLine(); // Consumir el salto de línea
+    private static void MenuGeneral() {
+    int MenuGeneralOption = 0;
+    do {
+        System.out.println("===    Hotel UTP    ===");
+        System.out.println("1. Modulo Habitaciones");
+        System.out.println("2. Modulo Clientes");
+        System.out.println("0. Salir");
+        System.out.print("Seleccione una opción: ");
+        MenuGeneralOption = scanner.nextInt();
+        scanner.nextLine(); // Consumir el salto de línea
 
-            switch (MenuGeneralOption) {
-                case 1:
-                    mostrarMenuHabitaciones();
-                    break;
-                case 2:
-                    System.out.println("aun en desarrollo");
-                    break;
-                case 0:
-                    System.out.println("¡Hasta luego!");
-                    break;
-                default:
-                    System.out.println("Opción inválida. Intente nuevamente.");
-            }
-            System.out.println();
-        } while (MenuGeneralOption != 0);
-    }
+        switch (MenuGeneralOption) {
+            case 1:
+                mostrarMenuHabitaciones();
+                break;
+            case 2:
+                mostrarMenuClientes();
+                break;
+            case 0:
+                System.out.println("¡Hasta luego!");
+                break;
+            default:
+                System.out.println("Opción inválida. Intente nuevamente.");
+        }
+        System.out.println();
+    } while (MenuGeneralOption != 0);
+}
+
     private static void mostrarMenuHabitaciones() {
         int opcion = 0;
         do {
@@ -148,4 +147,74 @@ public class Hotel {
         scanner.nextLine(); // Consumir el salto de línea
         gestorHabitaciones.eliminarHabitacion(numero);
     }
+
+    private static void mostrarMenuClientes() {
+    int opcion = 0;
+    do {
+        System.out.println("=== Menú de Gestión de Clientes ===");
+        System.out.println("1. Mostrar clientes");
+        System.out.println("2. Buscar cliente");
+        System.out.println("3. Registrar cliente");
+        System.out.println("4. Modificar cliente");
+        System.out.println("5. Eliminar cliente");
+        System.out.println("0. Salir");
+        System.out.print("Seleccione una opción: ");
+        opcion = scanner.nextInt();
+        scanner.nextLine(); // Consumir el salto de línea
+
+        switch (opcion) {
+            case 1:
+                //gestorHabitaciones.mostrarClientes();
+                break;
+            case 2:
+                //buscarCliente();
+                break;
+            case 3:
+                registrarCliente();
+                break;
+            case 4:
+                //modificarCliente();
+                break;
+            case 5:
+                //eliminarCliente();
+                break;
+            case 0:
+                System.out.println("¡Hasta luego!");
+                break;
+            default:
+                System.out.println("Opción inválida. Intente nuevamente.");
+        }
+        System.out.println();
+    } while (opcion != 0);
+}
+    
+    private static void registrarCliente() {
+    Scanner scanner = new Scanner(System.in);
+    System.out.println("Ingrese el DNI del cliente:");
+    String dni = scanner.nextLine();
+    System.out.println("Ingrese los nombres del cliente:");
+    String nombres = scanner.nextLine();
+    System.out.println("Ingrese los apellidos del cliente:");
+    String apellidos = scanner.nextLine();
+    System.out.println("Ingrese la dirección del cliente:");
+    String direccion = scanner.nextLine();
+    System.out.println("Ingrese el sexo del cliente:");
+    String sexo = scanner.nextLine();
+    System.out.println("Ingrese la fecha de nacimiento del cliente");
+    String fechaNacimiento = scanner.nextLine();
+    System.out.println("Ingrese la nacionalidad del cliente");
+    String nacionalidad = scanner.nextLine();
+    System.out.println("Ingrese el correo del cliente");
+    String correo = scanner.nextLine();
+    System.out.println("Ingrese el celular del cliente");
+    String celular = scanner.nextLine();
+    // Crear un objeto Cliente con los datos ingresados
+    Cliente cliente = new Cliente(dni, nombres, apellidos, direccion, sexo, fechaNacimiento, nacionalidad, correo, celular);
+
+    // Llamar al método correspondiente del GestorHabitaciones para registrar al cliente
+    gestorHabitaciones.registrarCliente(cliente);
+
+    System.out.println("Cliente registrado exitosamente.");
+}
+
 }

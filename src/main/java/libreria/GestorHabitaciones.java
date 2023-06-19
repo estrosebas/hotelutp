@@ -11,15 +11,18 @@ package libreria;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-
 public class GestorHabitaciones {
     private static final String ARCHIVO_CSV = "habitaciones.csv";
+    //private static final String ARCHIVO_CSV_CLIENTES = "ARCHIVO_CLIENTES_CSV";
     private List<Habitacion> habitaciones;
+    private List<Cliente> clientes;
 
     // Constructor
     public GestorHabitaciones() {
         habitaciones = new ArrayList<>();
+        clientes = new ArrayList<>();
         cargarDatosDesdeCSV();
+        cargarDatosClientesDesdeCSV();
     }
 
     // Método para cargar los datos desde el archivo CSV
@@ -113,6 +116,114 @@ public class GestorHabitaciones {
             System.out.println("La habitación ha sido eliminada exitosamente.");
         } else {
             System.out.println("La habitación no existe.");
+        }
+    }
+////////////////////////////////////////////////cliente////////////////////////////////////
+    // Método para cargar datos del clientes desde el csv
+    private void cargarDatosClientesDesdeCSV() {
+    BufferedReader br = null;
+    String line;
+    try {
+        br = new BufferedReader(new FileReader("clientes.csv"));
+        while ((line = br.readLine()) != null) {
+            String[] data = line.split(",");
+            String dni = data[0];
+            String nombres = data[1];
+            String apellidos = data[2];
+            String direccion = data[3];
+            String sexo = data[4];
+            // Parsear la fecha de nacimiento si está en un formato específico
+            String fechaNacimiento = (data[5]);
+            String nacionalidad = data[6];
+            String correo = data[7];
+            String celular = data[8];
+            
+            Cliente cliente = new Cliente(dni, nombres, apellidos, direccion, sexo, fechaNacimiento, nacionalidad, correo, celular);
+            clientes.add(cliente);
+        }
+    } catch (FileNotFoundException e) {
+        // El archivo no existe, se creará uno nuevo al guardar los datos
+    } catch (IOException e) {
+        e.printStackTrace();
+    } finally {
+        if (br != null) {
+            try {
+                br.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+
+
+    // Método para guardar datos del clientes desde el csv
+    private void guardarDatosClientesEnCSV() {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("clientes.csv"))) {
+            for (Cliente cliente : clientes) {
+                bw.write(cliente.getDni() + "," +
+                        cliente.getNombres() + "," +
+                        cliente.getApellidos() + "," +
+                        cliente.getDireccion() + "," +
+                        cliente.getSexo() + "," +
+                        cliente.getFechaNacimiento() + "," +
+                        cliente.getNacionalidad() + "," +
+                        cliente.getCorreo() + "," +
+                        cliente.getCelular());
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void mostrarClientes() {
+        for (Cliente cliente : clientes) {
+            System.out.println(cliente.toString());
+        }
+    }
+
+    public Cliente buscarCliente(String dni) {
+        for (Cliente cliente : clientes) {
+            if (cliente.getDni().equals(dni)) {
+                return cliente;
+            }
+        }
+        return null;
+    }
+
+    public void registrarCliente(Cliente cliente) {
+        clientes.add(cliente);
+        guardarDatosClientesEnCSV();
+        System.out.println("El cliente ha sido registrado exitosamente.");
+    }
+
+    public void modificarCliente(String dni, String nuevosNombres, String nuevosApellidos, String nuevaDireccion, String nuevoSexo, String nuevaFechaNacimiento, String nuevaNacionalidad, String nuevoCorreo, String nuevoCelular) {
+        Cliente cliente = buscarCliente(dni);
+        if (cliente != null) {
+            cliente.setNombres(nuevosNombres);
+            cliente.setApellidos(nuevosApellidos);
+            cliente.setDireccion(nuevaDireccion);
+            cliente.setSexo(nuevoSexo);
+            cliente.setFechaNacimiento(nuevaFechaNacimiento);
+            cliente.setNacionalidad(nuevaNacionalidad);
+            cliente.setCorreo(nuevoCorreo);
+            cliente.setCelular(nuevoCelular);
+            guardarDatosClientesEnCSV();
+            System.out.println("El cliente ha sido modificado exitosamente.");
+        } else {
+            System.out.println("El cliente no existe.");
+        }
+    }
+
+    public void eliminarCliente(String dni) {
+        Cliente cliente = buscarCliente(dni);
+        if (cliente != null) {
+            clientes.remove(cliente);
+            guardarDatosClientesEnCSV();
+            System.out.println("El cliente ha sido eliminado exitosamente.");
+        } else {
+            System.out.println("El cliente no existe.");
         }
     }
 }
