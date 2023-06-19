@@ -29,7 +29,7 @@ Este proyecto es una aplicación de consola en Java para el mantenimiento de hab
 - GestorHabitaciones.java: Clase que gestiona las operaciones de mantenimiento de las habitaciones y el archivo CSV.
 - Main.java: Clase principal que contiene el menú y las interacciones con el usuario.
 
-## Autores :black_nib:
+## Autores 
 Diego Sebastian Gonzales Gomez - codificación
 
 ## Licencia
