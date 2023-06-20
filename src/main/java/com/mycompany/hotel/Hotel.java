@@ -215,6 +215,7 @@ public class Hotel {
     gestorHabitaciones.registrarCliente(cliente);
 
     System.out.println("Cliente registrado exitosamente.");
+    scanner.close();
 }
-
+//comentario
 }
