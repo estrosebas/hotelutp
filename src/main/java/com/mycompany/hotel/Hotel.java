@@ -4,7 +4,6 @@
 
 package com.mycompany.hotel;
 
-
 /**
  *
  * @author Sebas
@@ -178,7 +177,7 @@ public class Hotel {
                     registrarCliente();
                     break;
                 case 4:
-                    // modificarCliente();
+                    modificarCliente();
                     break;
                 case 5:
                     eliminarCliente();
@@ -225,8 +224,7 @@ public class Hotel {
 
     }
 
-    private static void buscarCliente() 
-    {
+    private static void buscarCliente() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Ingrese el DNI del cliente a buscar:");
@@ -243,28 +241,80 @@ public class Hotel {
             System.out.println("Apellidos: " + cliente.getApellidos());
             System.out.println("Dirección: " + cliente.getDireccion());
             System.out.println("Sexo: " + cliente.getSexo());
+            System.out.println("Fecha de nacimiento: " + cliente.getFechaNacimiento());
+            System.out.println("Nacionalidad " + cliente.getNacionalidad());
+            System.out.println("Correo " + cliente.getCorreo());
+            System.out.println("Celular " + cliente.getCelular());
         } else {
             System.out.println("El cliente con el DNI ingresado no existe.");
         }
     }
 
     private static void eliminarCliente() {
-    Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 
-    System.out.println("Ingrese el DNI del cliente a eliminar:");
-    String dni = scanner.nextLine();
+        System.out.println("Ingrese el DNI del cliente a eliminar:");
+        String dni = scanner.nextLine();
 
-    // Verificar si el cliente existe
-    // Llamar al método correspondiente del GestorHabitaciones para buscar al
-    // cliente
+        // Verificar si el cliente existe
+        // Llamar al método correspondiente del GestorHabitaciones para buscar al
+        // cliente
         Cliente cliente = gestorHabitaciones.buscarCliente(dni);
-    if (cliente != null) {
-        // Llamar al método correspondiente del GestorHabitaciones para eliminar al cliente
-        gestorHabitaciones.eliminarCliente(dni);
+        if (cliente != null) {
+            // Llamar al método correspondiente del GestorHabitaciones para eliminar al
+            // cliente
+            gestorHabitaciones.eliminarCliente(dni);
 
-        System.out.println("Cliente eliminado exitosamente.");
-    } else {
-        System.out.println("El cliente con el DNI ingresado no existe.");
+            System.out.println("Cliente eliminado exitosamente.");
+        } else {
+            System.out.println("El cliente con el DNI ingresado no existe.");
+        }
     }
-}
+    private static void modificarCliente() {
+        System.out.print("Ingrese el dni del cliente a modificar: ");
+        String dni = scanner.nextLine();
+        // scanner.nextLine(); // Consumir el salto de línea
+        // cliente
+        Cliente clienteExistente = gestorHabitaciones.buscarCliente(dni);
+        if (clienteExistente != null) {
+            System.out.println("Cliente encontrado: " + clienteExistente.toString());
+            System.out.println("Ingrese los nuevos datos del cliente:");
+
+            System.out.print("Nuevos nombres: ");
+            String nuevosNombres = scanner.nextLine();
+
+            System.out.print("Nuevos apellidos: ");
+            String nuevosApellidos = scanner.nextLine();
+
+            System.out.print("Nueva dirección: ");
+            String nuevaDireccion = scanner.nextLine();
+
+            System.out.print("Nuevo sexo: ");
+            String nuevoSexo = scanner.nextLine();
+
+            System.out.print("Nueva fecha de nacimiento: ");
+            String nuevaFechaNacimiento = scanner.nextLine();
+
+            System.out.print("Nueva nacionalidad: ");
+            String nuevaNacionalidad = scanner.nextLine();
+
+            System.out.print("Nuevo correo: ");
+            String nuevoCorreo = scanner.nextLine();
+
+            System.out.print("Nuevo celular: ");
+            String nuevoCelular = scanner.nextLine();
+
+            // Crear un nuevo objeto Cliente con los nuevos datos
+            //
+
+            // Llamar al método correspondiente del GestorHabitaciones para modificar al
+            // cliente
+            gestorHabitaciones.modificarCliente(dni, nuevosNombres, nuevosApellidos, nuevaDireccion, nuevoSexo,
+                    nuevaFechaNacimiento, nuevaNacionalidad, nuevoCorreo, nuevoCelular);
+
+            System.out.println("Cliente modificado exitosamente.");
+        } else {
+            System.out.println("El cliente con el DNI ingresado no existe.");
+        }
+    }
 }
