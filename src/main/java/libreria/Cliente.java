@@ -107,13 +107,13 @@ public class Cliente {
     @Override
     public String toString() {
         return "Documento: " +  dni +
-                ", Nombres: " + nombres +
-                ", Apellidos: " + apellidos +
-                ", Dirección: " + direccion +
-                ", Sexo: " + sexo +
-                ", Fecha de nacimiento: " + fechaNacimiento +
-                ", Nacionalidad: " + nacionalidad +
-                ", Correo: " + correo +
-                ", Celular: " + celular;
+                ", \n Nombres: " + nombres +
+                ", \n Apellidos: " + apellidos +
+                ", \n Dirección: " + direccion +
+                ", \n Sexo: " + sexo +
+                ", \n Fecha de nacimiento: " + fechaNacimiento +
+                ", \n Nacionalidad: " + nacionalidad +
+                ", \n Correo: " + correo +
+                ", \n Celular: " + celular;
     }
 }

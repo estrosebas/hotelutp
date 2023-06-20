@@ -4,6 +4,7 @@
 
 package com.mycompany.hotel;
 
+
 /**
  *
  * @author Sebas
@@ -20,37 +21,39 @@ public class Hotel {
     private static GestorHabitaciones gestorHabitaciones = new GestorHabitaciones();
 
     public static void main(String[] args) {
-        //mostrarMenuHabitaciones();
+        // mostrarMenuHabitaciones();
         MenuGeneral();
     }
+
     private static void MenuGeneral() {
-    int MenuGeneralOption = 0;
-    do {
-        System.out.println("===    Hotel UTP    ===");
-        System.out.println("1. Modulo Habitaciones");
-        System.out.println("2. Modulo Clientes");
-        System.out.println("0. Salir");
-        System.out.print("Seleccione una opción: ");
-        MenuGeneralOption = scanner.nextInt();
-        scanner.nextLine(); // Consumir el salto de línea
+        int MenuGeneralOption = 0;
+        do {
+            System.out.println("===    Hotel UTP    ===");
+            System.out.println("1. Modulo Habitaciones");
+            System.out.println("2. Modulo Clientes");
+            System.out.println("0. Salir");
+            System.out.print("Seleccione una opción: ");
+            MenuGeneralOption = scanner.nextInt();
+            scanner.nextLine(); // Consumir el salto de línea
 
-        switch (MenuGeneralOption) {
-            case 1:
-                mostrarMenuHabitaciones();
-                break;
-            case 2:
-                mostrarMenuClientes();
-                break;
-            case 0:
-                System.out.println("¡Hasta luego!");
-                break;
-            default:
-                System.out.println("Opción inválida. Intente nuevamente.");
-        }
-        System.out.println();
-    } while (MenuGeneralOption != 0);
-}
+            switch (MenuGeneralOption) {
+                case 1:
+                    mostrarMenuHabitaciones();
+                    break;
+                case 2:
+                    mostrarMenuClientes();
+                    break;
+                case 0:
+                    System.out.println("¡Hasta luego!");
+                    break;
+                default:
+                    System.out.println("Opción inválida. Intente nuevamente.");
+            }
+            System.out.println();
+        } while (MenuGeneralOption != 0);
+    }
 
+    ////////////// INICIO HABITACIONES/////
     private static void mostrarMenuHabitaciones() {
         int opcion = 0;
         do {
@@ -148,74 +151,120 @@ public class Hotel {
         gestorHabitaciones.eliminarHabitacion(numero);
     }
 
+    ////////////// FIN HABITACIONES
+    ///////////// INICIO CLIENTES
     private static void mostrarMenuClientes() {
-    int opcion = 0;
-    do {
-        System.out.println("=== Menú de Gestión de Clientes ===");
-        System.out.println("1. Mostrar clientes");
-        System.out.println("2. Buscar cliente");
-        System.out.println("3. Registrar cliente");
-        System.out.println("4. Modificar cliente");
-        System.out.println("5. Eliminar cliente");
-        System.out.println("0. Salir");
-        System.out.print("Seleccione una opción: ");
-        opcion = scanner.nextInt();
-        scanner.nextLine(); // Consumir el salto de línea
+        int opcionClientes = 0;
+        do {
+            System.out.println("=== Menú de Gestión de Clientes ===");
+            System.out.println("1. Mostrar clientes");
+            System.out.println("2. Buscar cliente");
+            System.out.println("3. Registrar cliente");
+            System.out.println("4. Modificar cliente");
+            System.out.println("5. Eliminar cliente");
+            System.out.println("0. Salir");
+            System.out.print("Seleccione una opción: ");
+            opcionClientes = scanner.nextInt();
+            scanner.nextLine(); // Consumir el salto de línea
 
-        switch (opcion) {
-            case 1:
-                //gestorHabitaciones.mostrarClientes();
-                break;
-            case 2:
-                //buscarCliente();
-                break;
-            case 3:
-                registrarCliente();
-                break;
-            case 4:
-                //modificarCliente();
-                break;
-            case 5:
-                //eliminarCliente();
-                break;
-            case 0:
-                System.out.println("¡Hasta luego!");
-                break;
-            default:
-                System.out.println("Opción inválida. Intente nuevamente.");
-        }
-        System.out.println();
-    } while (opcion != 0);
-}
-    
+            switch (opcionClientes) {
+                case 1:
+                    gestorHabitaciones.mostrarClientes();
+                    break;
+                case 2:
+                    buscarCliente();
+                    break;
+                case 3:
+                    registrarCliente();
+                    break;
+                case 4:
+                    // modificarCliente();
+                    break;
+                case 5:
+                    eliminarCliente();
+                    break;
+                case 0:
+                    System.out.println("¡Hasta luego!");
+                    break;
+                default:
+                    System.out.println("Opción inválida. Intente nuevamente.");
+            }
+            System.out.println();
+        } while (opcionClientes != 0);
+    }
+
     private static void registrarCliente() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Ingrese el DNI del cliente:");
+        String dni = scanner.nextLine();
+        System.out.println("Ingrese los nombres del cliente:");
+        String nombres = scanner.nextLine();
+        System.out.println("Ingrese los apellidos del cliente:");
+        String apellidos = scanner.nextLine();
+        System.out.println("Ingrese la dirección del cliente:");
+        String direccion = scanner.nextLine();
+        System.out.println("Ingrese el sexo del cliente:");
+        String sexo = scanner.nextLine();
+        System.out.println("Ingrese la fecha de nacimiento del cliente");
+        String fechaNacimiento = scanner.nextLine();
+        System.out.println("Ingrese la nacionalidad del cliente");
+        String nacionalidad = scanner.nextLine();
+        System.out.println("Ingrese el correo del cliente");
+        String correo = scanner.nextLine();
+        System.out.println("Ingrese el celular del cliente");
+        String celular = scanner.nextLine();
+        // Crear un objeto Cliente con los datos ingresados
+        Cliente cliente = new Cliente(dni, nombres, apellidos, direccion, sexo, fechaNacimiento, nacionalidad, correo,
+                celular);
+
+        // Llamar al método correspondiente del GestorHabitaciones para registrar al
+        // cliente
+        gestorHabitaciones.registrarCliente(cliente);
+
+        System.out.println("Cliente registrado exitosamente.");
+
+    }
+
+    private static void buscarCliente() 
+    {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Ingrese el DNI del cliente a buscar:");
+        String dni = scanner.nextLine();
+
+        // Llamar al método correspondiente del GestorHabitaciones para buscar al
+        // cliente
+        Cliente cliente = gestorHabitaciones.buscarCliente(dni);
+
+        if (cliente != null) {
+            System.out.println("Cliente encontrado:");
+            System.out.println("DNI: " + cliente.getDni());
+            System.out.println("Nombres: " + cliente.getNombres());
+            System.out.println("Apellidos: " + cliente.getApellidos());
+            System.out.println("Dirección: " + cliente.getDireccion());
+            System.out.println("Sexo: " + cliente.getSexo());
+        } else {
+            System.out.println("El cliente con el DNI ingresado no existe.");
+        }
+    }
+
+    private static void eliminarCliente() {
     Scanner scanner = new Scanner(System.in);
-    System.out.println("Ingrese el DNI del cliente:");
+
+    System.out.println("Ingrese el DNI del cliente a eliminar:");
     String dni = scanner.nextLine();
-    System.out.println("Ingrese los nombres del cliente:");
-    String nombres = scanner.nextLine();
-    System.out.println("Ingrese los apellidos del cliente:");
-    String apellidos = scanner.nextLine();
-    System.out.println("Ingrese la dirección del cliente:");
-    String direccion = scanner.nextLine();
-    System.out.println("Ingrese el sexo del cliente:");
-    String sexo = scanner.nextLine();
-    System.out.println("Ingrese la fecha de nacimiento del cliente");
-    String fechaNacimiento = scanner.nextLine();
-    System.out.println("Ingrese la nacionalidad del cliente");
-    String nacionalidad = scanner.nextLine();
-    System.out.println("Ingrese el correo del cliente");
-    String correo = scanner.nextLine();
-    System.out.println("Ingrese el celular del cliente");
-    String celular = scanner.nextLine();
-    // Crear un objeto Cliente con los datos ingresados
-    Cliente cliente = new Cliente(dni, nombres, apellidos, direccion, sexo, fechaNacimiento, nacionalidad, correo, celular);
 
-    // Llamar al método correspondiente del GestorHabitaciones para registrar al cliente
-    gestorHabitaciones.registrarCliente(cliente);
+    // Verificar si el cliente existe
+    // Llamar al método correspondiente del GestorHabitaciones para buscar al
+    // cliente
+        Cliente cliente = gestorHabitaciones.buscarCliente(dni);
+    if (cliente != null) {
+        // Llamar al método correspondiente del GestorHabitaciones para eliminar al cliente
+        gestorHabitaciones.eliminarCliente(dni);
 
-    System.out.println("Cliente registrado exitosamente.");
-    scanner.close();
+        System.out.println("Cliente eliminado exitosamente.");
+    } else {
+        System.out.println("El cliente con el DNI ingresado no existe.");
+    }
 }
-
 }

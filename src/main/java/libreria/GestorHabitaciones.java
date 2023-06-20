@@ -176,10 +176,11 @@ public class GestorHabitaciones {
             e.printStackTrace();
         }
     }
-
+    
     public void mostrarClientes() {
         for (Cliente cliente : clientes) {
             System.out.println(cliente.toString());
+            System.out.print("\n");
         }
     }
 
@@ -196,24 +197,6 @@ public class GestorHabitaciones {
         clientes.add(cliente);
         guardarDatosClientesEnCSV();
         System.out.println("El cliente ha sido registrado exitosamente.");
-    }
-
-    public void modificarCliente(String dni, String nuevosNombres, String nuevosApellidos, String nuevaDireccion, String nuevoSexo, String nuevaFechaNacimiento, String nuevaNacionalidad, String nuevoCorreo, String nuevoCelular) {
-        Cliente cliente = buscarCliente(dni);
-        if (cliente != null) {
-            cliente.setNombres(nuevosNombres);
-            cliente.setApellidos(nuevosApellidos);
-            cliente.setDireccion(nuevaDireccion);
-            cliente.setSexo(nuevoSexo);
-            cliente.setFechaNacimiento(nuevaFechaNacimiento);
-            cliente.setNacionalidad(nuevaNacionalidad);
-            cliente.setCorreo(nuevoCorreo);
-            cliente.setCelular(nuevoCelular);
-            guardarDatosClientesEnCSV();
-            System.out.println("El cliente ha sido modificado exitosamente.");
-        } else {
-            System.out.println("El cliente no existe.");
-        }
     }
 
     public void eliminarCliente(String dni) {
