@@ -217,5 +217,5 @@ public class Hotel {
     System.out.println("Cliente registrado exitosamente.");
     scanner.close();
 }
-//comentario
+
 }
