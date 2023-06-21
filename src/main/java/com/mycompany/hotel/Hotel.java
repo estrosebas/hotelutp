@@ -21,7 +21,40 @@ public class Hotel {
 
     public static void main(String[] args) {
         // mostrarMenuHabitaciones();
-        MenuGeneral();
+        Scanner scanner = new Scanner(System.in);
+        // MenuGeneral();
+        String Contraseña = "Admin";
+        String opcionPass = "";
+        int opcionmenu = 0;
+        do {
+            System.out.println("=== Menú de Mantenimiento de Habitaciones ===");
+            System.out.println("1. Ingresar contraseña");
+            //System.out.println("2. ");
+            System.out.println("0. Salir");
+            System.out.print("Seleccione una opción: ");
+            opcionmenu = scanner.nextInt();
+            scanner.nextLine(); // Consumir el salto de línea
+
+            switch (opcionmenu) {
+                case 1:
+                    System.out.println("Ingrese la contraseña");
+                    opcionPass = scanner.nextLine();
+                    if (opcionPass.equals(Contraseña)) 
+                    {
+                        System.out.println("Acceso exitoso");
+                        MenuGeneral();
+                    }else{
+                        System.out.println("Contraseña incorrecta");
+                    }
+                    break;
+                case 0:
+                    System.out.println("¡Hasta luego!");
+                    break;
+                default:
+                    System.out.println("Opción inválida. Intente nuevamente.");
+            }
+            System.out.println();
+        } while (opcionmenu != 0);
     }
 
     private static void MenuGeneral() {
