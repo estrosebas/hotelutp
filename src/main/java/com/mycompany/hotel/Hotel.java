@@ -14,6 +14,7 @@ import libreria.Cliente;
 //import libreria.cuartos;
 import libreria.GestorHabitaciones;
 import libreria.Habitacion;
+import javax.swing.JOptionPane;
 
 public class Hotel {
     private static Scanner scanner = new Scanner(System.in);
@@ -21,52 +22,48 @@ public class Hotel {
 
     public static void main(String[] args) {
         // mostrarMenuHabitaciones();
-        Scanner scanner = new Scanner(System.in);
-        // MenuGeneral();
+
+        // contrasena;
         String Contraseña = "Admin";
         String opcionPass = "";
         int opcionmenu = 0;
         do {
-            System.out.println("=== Menú de Mantenimiento de Habitaciones ===");
-            System.out.println("1. Ingresar contraseña");
-            //System.out.println("2. ");
-            System.out.println("0. Salir");
-            System.out.print("Seleccione una opción: ");
-            opcionmenu = scanner.nextInt();
-            scanner.nextLine(); // Consumir el salto de línea
+            opcionmenu = Integer.parseInt(JOptionPane.showInputDialog(
+                    "=== Menú de Mantenimiento de Habitaciones === \n" +
+                            "1. Ingresar contraseña\n" +
+                            "0. Salir\n" +
+                            "Seleccione una opción:"));
 
             switch (opcionmenu) {
                 case 1:
-                    System.out.println("Ingrese la contraseña");
-                    opcionPass = scanner.nextLine();
-                    if (opcionPass.equals(Contraseña)) 
-                    {
-                        System.out.println("Acceso exitoso");
+                    opcionPass = JOptionPane.showInputDialog("Ingrese la contraseña:");
+                    if (opcionPass.equals(Contraseña)) {
+                        // System.out.println("Acceso exitoso");
+                        JOptionPane.showMessageDialog(null, "Acceso exitoso");
                         MenuGeneral();
-                    }else{
-                        System.out.println("Contraseña incorrecta");
+                    } else {
+                        // System.out.println("Contraseña incorrecta");
+                        JOptionPane.showMessageDialog(null, "Contraseña incorrecta");
                     }
                     break;
                 case 0:
-                    System.out.println("¡Hasta luego!");
+                    JOptionPane.showMessageDialog(null, "¡Hasta luego!");
                     break;
                 default:
-                    System.out.println("Opción inválida. Intente nuevamente.");
+                    JOptionPane.showMessageDialog(null, "Opción inválida. Intente nuevamente.");
             }
-            System.out.println();
         } while (opcionmenu != 0);
     }
 
     private static void MenuGeneral() {
         int MenuGeneralOption = 0;
         do {
-            System.out.println("===    Hotel UTP    ===");
-            System.out.println("1. Modulo Habitaciones");
-            System.out.println("2. Modulo Clientes");
-            System.out.println("0. Salir");
-            System.out.print("Seleccione una opción: ");
-            MenuGeneralOption = scanner.nextInt();
-            scanner.nextLine(); // Consumir el salto de línea
+            MenuGeneralOption = Integer.parseInt(JOptionPane.showInputDialog(
+                    "===    Hotel UTP    ===\n" +
+                            "1. Modulo Habitaciones\n" +
+                            "2. Modulo Clientes\n" +
+                            "0. Salir\n" +
+                            "Seleccione una opción:"));
 
             switch (MenuGeneralOption) {
                 case 1:
@@ -76,12 +73,11 @@ public class Hotel {
                     mostrarMenuClientes();
                     break;
                 case 0:
-                    System.out.println("¡Hasta luego!");
+                    JOptionPane.showMessageDialog(null, "¡Hasta luego!");
                     break;
                 default:
-                    System.out.println("Opción inválida. Intente nuevamente.");
+                    JOptionPane.showMessageDialog(null, "Opción inválida. Intente nuevamente.");
             }
-            System.out.println();
         } while (MenuGeneralOption != 0);
     }
 
@@ -89,16 +85,16 @@ public class Hotel {
     private static void mostrarMenuHabitaciones() {
         int opcion = 0;
         do {
-            System.out.println("=== Menú de Mantenimiento de Habitaciones ===");
-            System.out.println("1. Mostrar habitaciones");
-            System.out.println("2. Buscar habitación");
-            System.out.println("3. Insertar habitación");
-            System.out.println("4. Modificar habitación");
-            System.out.println("5. Eliminar habitación");
-            System.out.println("0. Salir");
-            System.out.print("Seleccione una opción: ");
-            opcion = scanner.nextInt();
-            scanner.nextLine(); // Consumir el salto de línea
+
+            opcion = Integer.parseInt(JOptionPane.showInputDialog(null,
+                    "=== Menú de Mantenimiento de Habitaciones ===\n"
+                            + "1. Mostrar habitaciones\n"
+                            + "2. Buscar habitación\n"
+                            + "3. Insertar habitación\n"
+                            + "4. Modificar habitación\n"
+                            + "5. Eliminar habitación\n"
+                            + "0. Salir"
+                            + "Seleccione una opción: "));
 
             switch (opcion) {
                 case 1:
@@ -120,21 +116,20 @@ public class Hotel {
                     System.out.println("¡Hasta luego!");
                     break;
                 default:
-                    System.out.println("Opción inválida. Intente nuevamente.");
+                    JOptionPane.showMessageDialog(null, "Opción inválida. Intente nuevamente.");
             }
             System.out.println();
         } while (opcion != 0);
     }
 
     private static void buscarHabitacion() {
-        System.out.print("Ingrese el número de habitación a buscar: ");
-        int numero = scanner.nextInt();
-        scanner.nextLine(); // Consumir el salto de línea
+        int numero = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el número de habitación a buscar:"));
         Habitacion habitacion = gestorHabitaciones.buscarHabitacion(numero);
+        
         if (habitacion != null) {
-            System.out.println("Habitación encontrada: " + habitacion.toString());
+            JOptionPane.showMessageDialog(null, "Habitación encontrada: " + habitacion.toString());
         } else {
-            System.out.println("Habitación no encontrada.");
+            JOptionPane.showMessageDialog(null,"Habitación no encontrada.");
         }
     }
 
@@ -268,18 +263,21 @@ public class Hotel {
         Cliente cliente = gestorHabitaciones.buscarCliente(dni);
 
         if (cliente != null) {
-            System.out.println("Cliente encontrado:");
-            System.out.println("DNI: " + cliente.getDni());
-            System.out.println("Nombres: " + cliente.getNombres());
-            System.out.println("Apellidos: " + cliente.getApellidos());
-            System.out.println("Dirección: " + cliente.getDireccion());
-            System.out.println("Sexo: " + cliente.getSexo());
-            System.out.println("Fecha de nacimiento: " + cliente.getFechaNacimiento());
-            System.out.println("Nacionalidad " + cliente.getNacionalidad());
-            System.out.println("Correo " + cliente.getCorreo());
-            System.out.println("Celular " + cliente.getCelular());
+            String message = "Cliente encontrado:\n";
+            message += "DNI: " + cliente.getDni() + "\n";
+            message += "Nombres: " + cliente.getNombres() + "\n";
+            message += "Apellidos: " + cliente.getApellidos() + "\n";
+            message += "Dirección: " + cliente.getDireccion() + "\n";
+            message += "Sexo: " + cliente.getSexo() + "\n";
+            message += "Fecha de nacimiento: " + cliente.getFechaNacimiento() + "\n";
+            message += "Nacionalidad: " + cliente.getNacionalidad() + "\n";
+            message += "Correo: " + cliente.getCorreo() + "\n";
+            message += "Celular: " + cliente.getCelular();
+
+            JOptionPane.showMessageDialog(null, message, "Cliente encontrado", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            System.out.println("El cliente con el DNI ingresado no existe.");
+            JOptionPane.showMessageDialog(null, "El cliente con el DNI ingresado no existe.", "Cliente no encontrado",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -303,6 +301,7 @@ public class Hotel {
             System.out.println("El cliente con el DNI ingresado no existe.");
         }
     }
+
     private static void modificarCliente() {
         System.out.print("Ingrese el dni del cliente a modificar: ");
         String dni = scanner.nextLine();

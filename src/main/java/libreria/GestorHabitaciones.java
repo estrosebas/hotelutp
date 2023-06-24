@@ -12,6 +12,8 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 public class GestorHabitaciones {
     private static final String ARCHIVO_CSV = "habitaciones.csv";
     // private static final String ARCHIVO_CSV_CLIENTES = "ARCHIVO_CLIENTES_CSV";
@@ -73,9 +75,11 @@ public class GestorHabitaciones {
 
     // Método para mostrar la información de todas las habitaciones
     public void mostrarHabitaciones() {
+        String listadodehabitaciones = "";
         for (Habitacion habitacion : habitaciones) {
-            System.out.println(habitacion.toString());
+            listadodehabitaciones += habitacion.toString() + "\n";
         }
+        JOptionPane.showMessageDialog(null, listadodehabitaciones);
     }
 
     // Método para buscar una habitación por número

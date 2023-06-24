@@ -1,2 +1,5 @@
+libreria\Habitacion.class
 libreria\cuartos.class
+libreria\Cliente.class
 com\mycompany\hotel\Hotel.class
+libreria\GestorHabitaciones.class
