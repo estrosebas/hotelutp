@@ -125,56 +125,44 @@ public class Hotel {
     private static void buscarHabitacion() {
         int numero = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el número de habitación a buscar:"));
         Habitacion habitacion = gestorHabitaciones.buscarHabitacion(numero);
-        
+
         if (habitacion != null) {
             JOptionPane.showMessageDialog(null, "Habitación encontrada: " + habitacion.toString());
         } else {
-            JOptionPane.showMessageDialog(null,"Habitación no encontrada.");
+            JOptionPane.showMessageDialog(null, "Habitación no encontrada.");
         }
     }
 
     private static void insertarHabitacion() {
-        System.out.print("Ingrese el número de habitación: ");
-        int numero = scanner.nextInt();
-        scanner.nextLine(); // Consumir el salto de línea
-        System.out.print("Ingrese el tipo de habitación (simple | doble | triple): ");
-        String tipo = scanner.nextLine();
-        System.out.print("Ingrese el precio de la habitación: ");
-        double precio = scanner.nextDouble();
-        scanner.nextLine(); // Consumir el salto de línea
-        System.out.print("Ingrese el estado de la habitación (libre | ocupado): ");
-        String estado = scanner.nextLine();
+        int numero = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el número de habitación:"));
+        String tipo = JOptionPane.showInputDialog("Ingrese el tipo de habitación (simple | doble | triple):");
+        double precio = Double.parseDouble(JOptionPane.showInputDialog("Ingrese el precio de la habitación:"));
+        String estado = JOptionPane.showInputDialog("Ingrese el estado de la habitación (libre | ocupado):");
 
         Habitacion habitacion = new Habitacion(numero, tipo, precio, estado);
         gestorHabitaciones.insertarHabitacion(habitacion);
-        System.out.println("La habitación ha sido insertada exitosamente.");
+        JOptionPane.showMessageDialog(null, "La habitación ha sido insertada exitosamente.");
     }
 
     private static void modificarHabitacion() {
-        System.out.print("Ingrese el número de habitación a modificar: ");
-        int numero = scanner.nextInt();
-        scanner.nextLine(); // Consumir el salto de línea
+        int numero = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el número de habitación a modificar:"));
         Habitacion habitacion = gestorHabitaciones.buscarHabitacion(numero);
+
         if (habitacion != null) {
-            System.out.println("Habitación encontrada: " + habitacion.toString());
-            System.out.print("Ingrese el nuevo tipo de habitación (simple | doble | triple): ");
-            String tipo = scanner.nextLine();
-            System.out.print("Ingrese el nuevo precio de la habitación: ");
-            double precio = scanner.nextDouble();
-            scanner.nextLine(); // Consumir el salto de línea
-            System.out.print("Ingrese el nuevo estado de la habitación (libre | ocupado): ");
-            String estado = scanner.nextLine();
+            JOptionPane.showMessageDialog(null, "Habitación encontrada: " + habitacion.toString());
+            String tipo = JOptionPane.showInputDialog("Ingrese el nuevo tipo de habitación (simple | doble | triple):");
+            double precio = Double
+                    .parseDouble(JOptionPane.showInputDialog("Ingrese el nuevo precio de la habitación:"));
+            String estado = JOptionPane.showInputDialog("Ingrese el nuevo estado de la habitación (libre | ocupado):");
 
             gestorHabitaciones.modificarHabitacion(numero, tipo, precio, estado);
         } else {
-            System.out.println("Habitación no encontrada.");
+            JOptionPane.showMessageDialog(null, "Habitación no encontrada.");
         }
     }
 
     private static void eliminarHabitacion() {
-        System.out.print("Ingrese el número de habitación a eliminar: ");
-        int numero = scanner.nextInt();
-        scanner.nextLine(); // Consumir el salto de línea
+        int numero = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el número de habitación a eliminar:"));
         gestorHabitaciones.eliminarHabitacion(numero);
     }
 
