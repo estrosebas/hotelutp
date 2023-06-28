@@ -8,7 +8,7 @@ package com.mycompany.hotel;
  *
  * @author Sebas
  */
-import java.util.Scanner;
+//import java.util.Scanner;
 
 import libreria.Cliente;
 //import libreria.cuartos;
@@ -17,7 +17,6 @@ import libreria.Habitacion;
 import javax.swing.JOptionPane;
 
 public class Hotel {
-    private static Scanner scanner = new Scanner(System.in);
     private static GestorHabitaciones gestorHabitaciones = new GestorHabitaciones();
 
     public static void main(String[] args) {
@@ -63,7 +62,7 @@ public class Hotel {
                             "1. Modulo Habitaciones\n" +
                             "2. Modulo Clientes\n" +
                             "0. Salir\n" +
-                            "Seleccione una opción:"));
+                            "Seleccione una opción: "));
 
             switch (MenuGeneralOption) {
                 case 1:
@@ -93,7 +92,7 @@ public class Hotel {
                             + "3. Insertar habitación\n"
                             + "4. Modificar habitación\n"
                             + "5. Eliminar habitación\n"
-                            + "0. Salir"
+                            + "0. Salir\n"
                             + "Seleccione una opción: "));
 
             switch (opcion) {
@@ -118,7 +117,6 @@ public class Hotel {
                 default:
                     JOptionPane.showMessageDialog(null, "Opción inválida. Intente nuevamente.");
             }
-            System.out.println();
         } while (opcion != 0);
     }
 
@@ -171,16 +169,13 @@ public class Hotel {
     private static void mostrarMenuClientes() {
         int opcionClientes = 0;
         do {
-            System.out.println("=== Menú de Gestión de Clientes ===");
-            System.out.println("1. Mostrar clientes");
-            System.out.println("2. Buscar cliente");
-            System.out.println("3. Registrar cliente");
-            System.out.println("4. Modificar cliente");
-            System.out.println("5. Eliminar cliente");
-            System.out.println("0. Salir");
-            System.out.print("Seleccione una opción: ");
-            opcionClientes = scanner.nextInt();
-            scanner.nextLine(); // Consumir el salto de línea
+            opcionClientes = Integer.parseInt(JOptionPane.showInputDialog(null, "=== Menú de Gestión de Clientes ===\n"
+                    + "1. Mostrar clientes\n"
+                    + "2. Buscar cliente\n"
+                    + "3. Registrar cliente\n"
+                    + "4. Modificar cliente\n"
+                    + "5. Eliminar cliente\n"
+                    + "0. Salir"));
 
             switch (opcionClientes) {
                 case 1:
@@ -199,35 +194,25 @@ public class Hotel {
                     eliminarCliente();
                     break;
                 case 0:
-                    System.out.println("¡Hasta luego!");
+                    JOptionPane.showMessageDialog(null, "¡Hasta luego!");
                     break;
                 default:
-                    System.out.println("Opción inválida. Intente nuevamente.");
+                    JOptionPane.showMessageDialog(null, "Opción inválida. Intente nuevamente.");
             }
-            System.out.println();
         } while (opcionClientes != 0);
     }
 
     private static void registrarCliente() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Ingrese el DNI del cliente:");
-        String dni = scanner.nextLine();
-        System.out.println("Ingrese los nombres del cliente:");
-        String nombres = scanner.nextLine();
-        System.out.println("Ingrese los apellidos del cliente:");
-        String apellidos = scanner.nextLine();
-        System.out.println("Ingrese la dirección del cliente:");
-        String direccion = scanner.nextLine();
-        System.out.println("Ingrese el sexo del cliente:");
-        String sexo = scanner.nextLine();
-        System.out.println("Ingrese la fecha de nacimiento del cliente");
-        String fechaNacimiento = scanner.nextLine();
-        System.out.println("Ingrese la nacionalidad del cliente");
-        String nacionalidad = scanner.nextLine();
-        System.out.println("Ingrese el correo del cliente");
-        String correo = scanner.nextLine();
-        System.out.println("Ingrese el celular del cliente");
-        String celular = scanner.nextLine();
+        String dni = JOptionPane.showInputDialog(null, "Ingrese el DNI del cliente:");
+        String nombres = JOptionPane.showInputDialog(null, "Ingrese los nombres del cliente:");
+        String apellidos = JOptionPane.showInputDialog(null, "Ingrese los apellidos del cliente:");
+        String direccion = JOptionPane.showInputDialog(null, "Ingrese la dirección del cliente:");
+        String sexo = JOptionPane.showInputDialog(null, "Ingrese el sexo del cliente:");
+        String fechaNacimiento = JOptionPane.showInputDialog(null, "Ingrese la fecha de nacimiento del cliente:");
+        String nacionalidad = JOptionPane.showInputDialog(null, "Ingrese la nacionalidad del cliente:");
+        String correo = JOptionPane.showInputDialog(null, "Ingrese el correo del cliente:", "Registro de Cliente");
+        String celular = JOptionPane.showInputDialog(null, "Ingrese el celular del cliente:", "Registro de Cliente");
+
         // Crear un objeto Cliente con los datos ingresados
         Cliente cliente = new Cliente(dni, nombres, apellidos, direccion, sexo, fechaNacimiento, nacionalidad, correo,
                 celular);
@@ -236,33 +221,35 @@ public class Hotel {
         // cliente
         gestorHabitaciones.registrarCliente(cliente);
 
-        System.out.println("Cliente registrado exitosamente.");
-
+        JOptionPane.showMessageDialog(null, "Cliente registrado exitosamente.");
     }
 
     private static void buscarCliente() {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Ingrese el DNI del cliente a buscar:");
-        String dni = scanner.nextLine();
+        // SE USA STRING AL BUSCAR DNI EN CASO DE QUE EL DOCUMENT ODEL CLIENTE USE
+        // CARACTERES DISTINTOS A NUNMEROS
+        String dni = JOptionPane.showInputDialog(null, "Ingrese el DNI del cliente a buscar:");
 
         // Llamar al método correspondiente del GestorHabitaciones para buscar al
         // cliente
         Cliente cliente = gestorHabitaciones.buscarCliente(dni);
 
         if (cliente != null) {
-            String message = "Cliente encontrado:\n";
-            message += "DNI: " + cliente.getDni() + "\n";
-            message += "Nombres: " + cliente.getNombres() + "\n";
-            message += "Apellidos: " + cliente.getApellidos() + "\n";
-            message += "Dirección: " + cliente.getDireccion() + "\n";
-            message += "Sexo: " + cliente.getSexo() + "\n";
-            message += "Fecha de nacimiento: " + cliente.getFechaNacimiento() + "\n";
-            message += "Nacionalidad: " + cliente.getNacionalidad() + "\n";
-            message += "Correo: " + cliente.getCorreo() + "\n";
-            message += "Celular: " + cliente.getCelular();
-
-            JOptionPane.showMessageDialog(null, message, "Cliente encontrado", JOptionPane.INFORMATION_MESSAGE);
+            /*
+             * String message = "Cliente encontrado:\n";
+             * message += "DNI: " + cliente.getDni() + "\n";
+             * message += "Nombres: " + cliente.getNombres() + "\n";
+             * message += "Apellidos: " + cliente.getApellidos() + "\n";
+             * message += "Dirección: " + cliente.getDireccion() + "\n";
+             * message += "Sexo: " + cliente.getSexo() + "\n";
+             * message += "Fecha de nacimiento: " + cliente.getFechaNacimiento() + "\n";
+             * message += "Nacionalidad: " + cliente.getNacionalidad() + "\n";
+             * message += "Correo: " + cliente.getCorreo() + "\n";
+             * message += "Celular: " + cliente.getCelular();
+             * 
+             * JOptionPane.showMessageDialog(null, message, "Cliente encontrado",
+             * JOptionPane.INFORMATION_MESSAGE);
+             */
+            JOptionPane.showMessageDialog(null, "Cliente encontrada: \n" + cliente.toString());
         } else {
             JOptionPane.showMessageDialog(null, "El cliente con el DNI ingresado no existe.", "Cliente no encontrado",
                     JOptionPane.ERROR_MESSAGE);
@@ -270,10 +257,7 @@ public class Hotel {
     }
 
     private static void eliminarCliente() {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("Ingrese el DNI del cliente a eliminar:");
-        String dni = scanner.nextLine();
+        String dni = JOptionPane.showInputDialog(null, "Ingrese el DNI del cliente a eliminar:");
 
         // Verificar si el cliente existe
         // Llamar al método correspondiente del GestorHabitaciones para buscar al
@@ -284,57 +268,36 @@ public class Hotel {
             // cliente
             gestorHabitaciones.eliminarCliente(dni);
 
-            System.out.println("Cliente eliminado exitosamente.");
+            JOptionPane.showMessageDialog(null, "Cliente eliminado exitosamente.");
         } else {
-            System.out.println("El cliente con el DNI ingresado no existe.");
+            JOptionPane.showMessageDialog(null, "El cliente con el DNI ingresado no existe.");
         }
     }
 
     private static void modificarCliente() {
-        System.out.print("Ingrese el dni del cliente a modificar: ");
-        String dni = scanner.nextLine();
-        // scanner.nextLine(); // Consumir el salto de línea
-        // cliente
+        String dni = JOptionPane.showInputDialog(null, "Ingrese el dni del cliente a modificar:");
         Cliente clienteExistente = gestorHabitaciones.buscarCliente(dni);
+
         if (clienteExistente != null) {
-            System.out.println("Cliente encontrado: " + clienteExistente.toString());
-            System.out.println("Ingrese los nuevos datos del cliente:");
+            JOptionPane.showMessageDialog(null, "Cliente encontrado: " + clienteExistente.toString());
+            JOptionPane.showMessageDialog(null, "Ingrese los nuevos datos del cliente:");
 
-            System.out.print("Nuevos nombres: ");
-            String nuevosNombres = scanner.nextLine();
+            String nuevosNombres = JOptionPane.showInputDialog(null, "Nuevos nombres:");
+            String nuevosApellidos = JOptionPane.showInputDialog(null, "Nuevos apellidos:");
+            String nuevaDireccion = JOptionPane.showInputDialog(null, "Nueva dirección:");
+            String nuevoSexo = JOptionPane.showInputDialog(null, "Nuevo sexo:");
+            String nuevaFechaNacimiento = JOptionPane.showInputDialog(null, "Nueva fecha de nacimiento:");
+            String nuevaNacionalidad = JOptionPane.showInputDialog(null, "Nueva nacionalidad:");
+            String nuevoCorreo = JOptionPane.showInputDialog(null, "Nuevo correo:");
+            String nuevoCelular = JOptionPane.showInputDialog(null, "Nuevo celular:");
 
-            System.out.print("Nuevos apellidos: ");
-            String nuevosApellidos = scanner.nextLine();
-
-            System.out.print("Nueva dirección: ");
-            String nuevaDireccion = scanner.nextLine();
-
-            System.out.print("Nuevo sexo: ");
-            String nuevoSexo = scanner.nextLine();
-
-            System.out.print("Nueva fecha de nacimiento: ");
-            String nuevaFechaNacimiento = scanner.nextLine();
-
-            System.out.print("Nueva nacionalidad: ");
-            String nuevaNacionalidad = scanner.nextLine();
-
-            System.out.print("Nuevo correo: ");
-            String nuevoCorreo = scanner.nextLine();
-
-            System.out.print("Nuevo celular: ");
-            String nuevoCelular = scanner.nextLine();
-
-            // Crear un nuevo objeto Cliente con los nuevos datos
-            //
-
-            // Llamar al método correspondiente del GestorHabitaciones para modificar al
-            // cliente
             gestorHabitaciones.modificarCliente(dni, nuevosNombres, nuevosApellidos, nuevaDireccion, nuevoSexo,
                     nuevaFechaNacimiento, nuevaNacionalidad, nuevoCorreo, nuevoCelular);
 
-            System.out.println("Cliente modificado exitosamente.");
+            JOptionPane.showMessageDialog(null, "Cliente modificado exitosamente.");
         } else {
-            System.out.println("El cliente con el DNI ingresado no existe.");
+            JOptionPane.showMessageDialog(null, "El cliente con el DNI ingresado no existe.");
         }
     }
+
 }

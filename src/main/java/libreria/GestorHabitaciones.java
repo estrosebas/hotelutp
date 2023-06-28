@@ -183,12 +183,22 @@ public class GestorHabitaciones {
         }
     }
 
-    public void mostrarClientes() {
+    /*public void mostrarClientes() {
         for (Cliente cliente : clientes) {
             System.out.println(cliente.toString());
             System.out.print("\n");
         }
+    }*/
+    
+    public void mostrarClientes() {
+        String Listaclientes = "";
+        for (Cliente cliente : clientes) {
+            Listaclientes += cliente.toString() + "\n \n";
+        }
+        System.out.println(Listaclientes);
+        JOptionPane.showMessageDialog(null, Listaclientes);
     }
+   
 
     public Cliente buscarCliente(String dni) {
         for (Cliente cliente : clientes) {
