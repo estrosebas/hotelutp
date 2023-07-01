@@ -118,11 +118,15 @@ public class GestorHabitaciones {
         if (habitacion != null) {
             habitaciones.remove(habitacion);
             guardarDatosEnCSV();
-            System.out.println("La habitación ha sido eliminada exitosamente.");
-        } else {
-            System.out.println("La habitación no existe.");
         }
     }
+    public void modificarEstadoHabitacion(int numero, String nuevoEstado) {
+    Habitacion habitacion = buscarHabitacion(numero);
+    if (habitacion != null) {
+        habitacion.setEstado(nuevoEstado);
+        guardarDatosEnCSV();
+    }
+}
 
     //////////////////////////////////////////////// cliente////////////////////////////////////
     // Método para cargar datos del clientes desde el csv
@@ -193,9 +197,8 @@ public class GestorHabitaciones {
     public void mostrarClientes() {
         String Listaclientes = "";
         for (Cliente cliente : clientes) {
-            Listaclientes += cliente.toString() + "\n \n";
+            Listaclientes += "DNI = " + cliente.getDni() + "\n";
         }
-        System.out.println(Listaclientes);
         JOptionPane.showMessageDialog(null, Listaclientes);
     }
    

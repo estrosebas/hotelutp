@@ -4,7 +4,10 @@
  */
 package libreria;
 
-
+/**
+ *
+ * @author Sebas
+ */
 public class Cliente {
 
     private String dni;

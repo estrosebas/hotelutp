@@ -61,6 +61,7 @@ public class Hotel {
                     "===    Hotel UTP    ===\n" +
                             "1. Modulo Habitaciones\n" +
                             "2. Modulo Clientes\n" +
+                            "3. Modulo hospedaje\n" +
                             "0. Salir\n" +
                             "Seleccione una opción: "));
 
@@ -70,6 +71,9 @@ public class Hotel {
                     break;
                 case 2:
                     mostrarMenuClientes();
+                    break;
+                case 3:
+                    mostrarMenuHospedaje();
                     break;
                 case 0:
                     JOptionPane.showMessageDialog(null, "¡Hasta luego!");
@@ -112,7 +116,7 @@ public class Hotel {
                     eliminarHabitacion();
                     break;
                 case 0:
-                    System.out.println("¡Hasta luego!");
+                    JOptionPane.showMessageDialog(null, "¡Hasta luego!");
                     break;
                 default:
                     JOptionPane.showMessageDialog(null, "Opción inválida. Intente nuevamente.");
@@ -163,6 +167,27 @@ public class Hotel {
         int numero = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el número de habitación a eliminar:"));
         gestorHabitaciones.eliminarHabitacion(numero);
     }
+    
+    private static void cambiarEstadoHabitacion() {
+    int numero = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el número de habitación:"));
+    Habitacion habitacion = gestorHabitaciones.buscarHabitacion(numero);
+
+    if (habitacion != null) {
+        String estadoActual = habitacion.getEstado();
+        String nuevoEstado = "";
+
+        if (estadoActual.equals("libre")) {
+            nuevoEstado = "ocupado";
+        } else if (estadoActual.equals("ocupado")) {
+            nuevoEstado = "libre";
+        }
+
+        gestorHabitaciones.modificarEstadoHabitacion(numero, nuevoEstado);
+        JOptionPane.showMessageDialog(null, "Estado de la habitación cambiado correctamente.");
+    } else {
+        JOptionPane.showMessageDialog(null, "Habitación no encontrada.");
+    }
+}
 
     ////////////// FIN HABITACIONES
     ///////////// INICIO CLIENTES
@@ -300,4 +325,39 @@ public class Hotel {
         }
     }
 
+    ///////////////////////////////// FIN CLIENTES//////////
+    // INICIO HOSPEDAJE//
+    private static void mostrarMenuHospedaje() {
+        int opcionHospedaje = 0;
+        do {
+            opcionHospedaje = Integer.parseInt(JOptionPane.showInputDialog(
+                    "===    Módulo Hospedaje    ===\n" +
+                            "1. Registrar hospedaje\n" +
+                            "2. Registrar salida de hospedaje\n" +
+                            "0. Volver al menú principal\n" +
+                            "Seleccione una opción: "));
+
+            switch (opcionHospedaje) {
+                case 1:
+                    registrarHospedaje();
+                    break;
+                case 2:
+                    //consultarHospedaje();
+                    break;
+                case 0:
+                    JOptionPane.showMessageDialog(null, "Volviendo al menú principal...");
+                    break;
+                default:
+                    JOptionPane.showMessageDialog(null, "Opción inválida. Intente nuevamente.");
+            }
+        } while (opcionHospedaje != 0);
+    }
+    private static void registrarHospedaje() {
+        //MOSTRAR DATOS DEL CLIENTE//
+        buscarCliente();
+        //MOSTRAR HABITACIONES TOTALES//
+        gestorHabitaciones.mostrarHabitaciones();
+        cambiarEstadoHabitacion();
+        
+    }
 }
