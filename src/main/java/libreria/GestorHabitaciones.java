@@ -16,16 +16,21 @@ import javax.swing.JOptionPane;
 
 public class GestorHabitaciones {
     private static final String ARCHIVO_CSV = "habitaciones.csv";
+    private static final String ARCHIVO_CSV_HOSPEDAJES = "hospedajes.csv";
+    private static final String ARCHIVO_CSV_CLIENTES = "clientes.csv";
     // private static final String ARCHIVO_CSV_CLIENTES = "ARCHIVO_CLIENTES_CSV";
     private List<Habitacion> habitaciones;
     private List<Cliente> clientes;
+    private List<Hospedaje> hospedajes;
 
     // Constructor
     public GestorHabitaciones() {
         habitaciones = new ArrayList<>();
         clientes = new ArrayList<>();
+        hospedajes = new ArrayList<>();
         cargarDatosDesdeCSV();
         cargarDatosClientesDesdeCSV();
+
     }
 
     // Método para cargar los datos desde el archivo CSV
@@ -120,13 +125,14 @@ public class GestorHabitaciones {
             guardarDatosEnCSV();
         }
     }
+
     public void modificarEstadoHabitacion(int numero, String nuevoEstado) {
-    Habitacion habitacion = buscarHabitacion(numero);
-    if (habitacion != null) {
-        habitacion.setEstado(nuevoEstado);
-        guardarDatosEnCSV();
+        Habitacion habitacion = buscarHabitacion(numero);
+        if (habitacion != null) {
+            habitacion.setEstado(nuevoEstado);
+            guardarDatosEnCSV();
+        }
     }
-}
 
     //////////////////////////////////////////////// cliente////////////////////////////////////
     // Método para cargar datos del clientes desde el csv
@@ -134,7 +140,7 @@ public class GestorHabitaciones {
         BufferedReader br = null;
         String line;
         try {
-            br = new BufferedReader(new FileReader("clientes.csv"));
+            br = new BufferedReader(new FileReader(ARCHIVO_CSV_CLIENTES));
             while ((line = br.readLine()) != null) {
                 String[] data = line.split(",");
                 String dni = data[0];
@@ -169,7 +175,7 @@ public class GestorHabitaciones {
 
     // Método para guardar datos del clientes desde el csv
     private void guardarDatosClientesEnCSV() {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter("clientes.csv"))) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(ARCHIVO_CSV_CLIENTES))) {
             for (Cliente cliente : clientes) {
                 bw.write(cliente.getDni() + "," +
                         cliente.getNombres() + "," +
@@ -187,13 +193,6 @@ public class GestorHabitaciones {
         }
     }
 
-    /*public void mostrarClientes() {
-        for (Cliente cliente : clientes) {
-            System.out.println(cliente.toString());
-            System.out.print("\n");
-        }
-    }*/
-    
     public void mostrarClientes() {
         String Listaclientes = "";
         for (Cliente cliente : clientes) {
@@ -201,7 +200,6 @@ public class GestorHabitaciones {
         }
         JOptionPane.showMessageDialog(null, Listaclientes);
     }
-   
 
     public Cliente buscarCliente(String dni) {
         for (Cliente cliente : clientes) {
@@ -215,7 +213,6 @@ public class GestorHabitaciones {
     public void registrarCliente(Cliente cliente) {
         clientes.add(cliente);
         guardarDatosClientesEnCSV();
-        System.out.println("El cliente ha sido registrado exitosamente.");
     }
 
     public void eliminarCliente(String dni) {
@@ -228,12 +225,15 @@ public class GestorHabitaciones {
             System.out.println("El cliente no existe.");
         }
     }
-    public void modificarCliente(String dni, String nuevoNombres, String nuevoApellidos, String nuevoDireccion, String nuevoSexo, String nuevoFechanacimiento, String nuevoNacionalidad, String nuevvoCorreo, String nuevoCelular) {
+
+    public void modificarCliente(String dni, String nuevoNombres, String nuevoApellidos, String nuevoDireccion,
+            String nuevoSexo, String nuevoFechanacimiento, String nuevoNacionalidad, String nuevvoCorreo,
+            String nuevoCelular) {
         Cliente cliente = buscarCliente(dni);
         if (cliente != null) {
-            //cliente.setTipo(tipo);
-            //cliente.setPrecio(precio);
-            //cliente.setEstado(estado);
+            // cliente.setTipo(tipo);
+            // cliente.setPrecio(precio);
+            // cliente.setEstado(estado);
             cliente.setNombres(nuevoNombres);
             cliente.setApellidos(nuevoApellidos);
             cliente.setDireccion(nuevoDireccion);
@@ -247,5 +247,62 @@ public class GestorHabitaciones {
         } else {
             System.out.println("El cliente no existe.");
         }
+    }
+
+    ////// hospedaje
+    private void cargarDatosHospedajeDesdeCSV() {
+        BufferedReader br = null;
+        String line;
+        try {
+            br = new BufferedReader(new FileReader("hospedajes.csv"));
+            while ((line = br.readLine()) != null) {
+                String[] data = line.split(",");
+                int numHospedaje = Integer.parseInt(data[0]);
+                String fechadeIngreso = data[1];
+                int numDiasHospedaje = Integer.parseInt(data[2]);
+                String lugardeorigen = data[3];
+                String observaciones = data[4];
+
+                Hospedaje hospedaje = new Hospedaje(numHospedaje, fechadeIngreso, numDiasHospedaje, lugardeorigen,
+                        observaciones);
+                hospedajes.add(hospedaje);
+            }
+        } catch (FileNotFoundException e) {
+            // El archivo no existe, se creará uno nuevo al guardar los datos
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+    /*  El método guardarDatosHospedajeEnCSV() se utiliza para guardar los datos de los hospedajes en un archivo CSV.  
+        La función comienza creando un objeto BufferedWriter para escribir en un archivo FileWriter. Se pasa como argumento el nombre del archivo CSV en el que se guardarán los datos. 
+        Luego, se itera sobre la lista de hospedajes y se escriben los datos de cada hospedaje en una línea del archivo CSV. Los datos se separan por comas y se concatenan utilizando el operador +. 
+        Finalmente, se captura cualquier excepción de tipo IOException que pueda ocurrir durante la escritura del archivo y se imprime la traza de la excepción. 
+        */
+    private void guardarDatosHospedajeEnCSV() {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(ARCHIVO_CSV_HOSPEDAJES))) {
+            for (Hospedaje hospedaje : hospedajes) {
+                bw.write(hospedaje.getNumHospedaje() + "," +
+                        hospedaje.getFechadeIngreso() + "," +
+                        hospedaje.getNumDiasHospedaje() + "," +
+                        hospedaje.getLugardeorigen() + "," +
+                        hospedaje.getObservaciones());
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void registrarHospedaje(Hospedaje hospedaje) {
+        hospedajes.add(hospedaje);
+        guardarDatosHospedajeEnCSV();
     }
 }

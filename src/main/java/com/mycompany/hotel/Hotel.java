@@ -259,21 +259,6 @@ public class Hotel {
         Cliente cliente = gestorHabitaciones.buscarCliente(dni);
 
         if (cliente != null) {
-            /*
-             * String message = "Cliente encontrado:\n";
-             * message += "DNI: " + cliente.getDni() + "\n";
-             * message += "Nombres: " + cliente.getNombres() + "\n";
-             * message += "Apellidos: " + cliente.getApellidos() + "\n";
-             * message += "Dirección: " + cliente.getDireccion() + "\n";
-             * message += "Sexo: " + cliente.getSexo() + "\n";
-             * message += "Fecha de nacimiento: " + cliente.getFechaNacimiento() + "\n";
-             * message += "Nacionalidad: " + cliente.getNacionalidad() + "\n";
-             * message += "Correo: " + cliente.getCorreo() + "\n";
-             * message += "Celular: " + cliente.getCelular();
-             * 
-             * JOptionPane.showMessageDialog(null, message, "Cliente encontrado",
-             * JOptionPane.INFORMATION_MESSAGE);
-             */
             JOptionPane.showMessageDialog(null, "Cliente encontrada: \n" + cliente.toString());
         } else {
             JOptionPane.showMessageDialog(null, "El cliente con el DNI ingresado no existe.", "Cliente no encontrado",
@@ -358,6 +343,32 @@ public class Hotel {
         //MOSTRAR HABITACIONES TOTALES//
         gestorHabitaciones.mostrarHabitaciones();
         cambiarEstadoHabitacion();
-        
+
+        //gestorHabitaciones.registrarHospedaje();
+    
     }
+
+    /*private static void registrarCliente() {
+        String numHospedaje = JOptionPane.showInputDialog(null, "Ingrese el numero de cuarto a hospedar:");
+        String fechadeIngreso = JOptionPane.showInputDialog(null, "Ingrese la fecha de ingreso del hospedaje:");
+        String numDiasHospedaje = JOptionPane.showInputDialog(null, "Ingrese los dias de hospedaje:");
+        String lugardeorigen = JOptionPane.showInputDialog(null, "Ingrese la nacionalidad del cliente:");
+        String observaciones = JOptionPane.showInputDialog(null, "Ingrese las obvsercaciones:");
+        
+        // Crear un objeto Cliente con los datos ingresados
+        Cliente cliente = new Cliente(dni, nombres, apellidos, direccion, sexo, fechaNacimiento, nacionalidad, correo,
+                celular);
+
+        // Llamar al método correspondiente del GestorHabitaciones para registrar al
+        // cliente
+        gestorHabitaciones.registrarCliente(cliente);
+
+        JOptionPane.showMessageDialog(null, "Cliente registrado exitosamente.");
+    }
+        this.numHospedaje = numHospedaje;
+        this.fechadeIngreso = fechadeIngreso;
+        this.numDiasHospedaje = numDiasHospedaje;
+        this.lugardeorigen = lugardeorigen;
+        this.observaciones = observaciones;
+    */
 }
