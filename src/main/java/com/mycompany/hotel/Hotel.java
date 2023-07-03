@@ -126,7 +126,7 @@ public class Hotel {
         } while (opcion != 0);
     }
 
-    private static void buscarHabitacion() {
+    private static Habitacion buscarHabitacion() {
         int numero = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el número de habitación a buscar:"));
         Habitacion habitacion = gestorHabitaciones.buscarHabitacion(numero);
 
@@ -135,6 +135,7 @@ public class Hotel {
         } else {
             JOptionPane.showMessageDialog(null, "Habitación no encontrada.");
         }
+        return habitacion;
     }
 
     private static void insertarHabitacion() {
@@ -171,25 +172,24 @@ public class Hotel {
     }
 
     private static void cambiarEstadoHabitacion(int numero) {
-    Habitacion habitacion = gestorHabitaciones.buscarHabitacion(numero);
+        Habitacion habitacion = gestorHabitaciones.buscarHabitacion(numero);
 
-    if (habitacion != null) {
-        String estadoActual = habitacion.getEstado();
-        String nuevoEstado = "";
+        if (habitacion != null) {
+            String estadoActual = habitacion.getEstado();
+            String nuevoEstado = "";
 
-        if (estadoActual.equals("libre")) {
-            nuevoEstado = "ocupado";
-        } else if (estadoActual.equals("ocupado")) {
-            nuevoEstado = "libre";
+            if (estadoActual.equals("libre")) {
+                nuevoEstado = "ocupado";
+            } else if (estadoActual.equals("ocupado")) {
+                nuevoEstado = "libre";
+            }
+
+            gestorHabitaciones.modificarEstadoHabitacion(numero, nuevoEstado);
+            JOptionPane.showMessageDialog(null, "Estado de la habitación cambiado correctamente.");
+        } else {
+            JOptionPane.showMessageDialog(null, "Habitación no encontrada.");
         }
-
-        gestorHabitaciones.modificarEstadoHabitacion(numero, nuevoEstado);
-        JOptionPane.showMessageDialog(null, "Estado de la habitación cambiado correctamente.");
-    } else {
-        JOptionPane.showMessageDialog(null, "Habitación no encontrada.");
     }
-}
-
 
     ////////////// FIN HABITACIONES
     ///////////// INICIO CLIENTES
@@ -250,24 +250,25 @@ public class Hotel {
 
         JOptionPane.showMessageDialog(null, "Cliente registrado exitosamente.");
     }
-///////SE REALIZO UN CAMBIO ESPECIFICIO PARA 
-private static Cliente buscarCliente() {
-    // SE USA STRING AL BUSCAR DNI EN CASO DE QUE EL DOCUMENT ODEL CLIENTE USE
-    // CARACTERES DISTINTOS A NUNMEROS
-    String dni = JOptionPane.showInputDialog(null, "Ingrese el DNI del cliente a buscar:");
 
-    // Llamar al método correspondiente del GestorHabitaciones para buscar al
-    // cliente
-    Cliente cliente = gestorHabitaciones.buscarCliente(dni);
+    /////// SE REALIZO UN CAMBIO ESPECIFICIO PARA
+    private static Cliente buscarCliente() {
+        // SE USA STRING AL BUSCAR DNI EN CASO DE QUE EL DOCUMENT ODEL CLIENTE USE
+        // CARACTERES DISTINTOS A NUNMEROS
+        String dni = JOptionPane.showInputDialog(null, "Ingrese el DNI del cliente a buscar:");
 
-    if (cliente != null) {
-        JOptionPane.showMessageDialog(null, "Cliente encontrado: \n" + cliente.toString());
-    } else {
-        JOptionPane.showMessageDialog(null, "El cliente con el DNI ingresado no existe.");
+        // Llamar al método correspondiente del GestorHabitaciones para buscar al
+        // cliente
+        Cliente cliente = gestorHabitaciones.buscarCliente(dni);
+
+        if (cliente != null) {
+            JOptionPane.showMessageDialog(null, "Cliente encontrado: \n" + cliente.toString());
+        } else {
+            JOptionPane.showMessageDialog(null, "El cliente con el DNI ingresado no existe.");
+        }
+
+        return cliente; // Devolver el cliente encontrado
     }
-
-    return cliente; // Devolver el cliente encontrado
-}
 
     private static void eliminarCliente() {
         String dni = JOptionPane.showInputDialog(null, "Ingrese el DNI del cliente a eliminar:");
@@ -321,6 +322,7 @@ private static Cliente buscarCliente() {
             opcionHospedaje = Integer.parseInt(JOptionPane.showInputDialog(
                     "===    Módulo Hospedaje    ===\n" +
                             "1. Registrar hospedaje\n" +
+                            "2. Consultar Huespedes\n" +
                             "2. Registrar salida de hospedaje\n" +
                             "0. Salir\n" +
                             "Seleccione una opción: "));
@@ -330,7 +332,7 @@ private static Cliente buscarCliente() {
                     registrarHospedaje();
                     break;
                 case 2:
-                    // consultarHospedaje();
+                    gestorHabitaciones.consultarHospedaje();    
                     break;
                 case 0:
                     JOptionPane.showMessageDialog(null, "Volviendo al menú principal...");
@@ -342,30 +344,39 @@ private static Cliente buscarCliente() {
     }
 
     private static void registrarHospedaje() {
-        // MOSTRAR DATOS DEL CLIENTE//
         Cliente cliente = buscarCliente();
-        // MOSTRAR HABITACIONES TOTALES//
-        gestorHabitaciones.mostrarHabitaciones();
-        
+        Habitacion habitacion = buscarHabitacion();
 
-        int numHospedaje = Integer
-                .parseInt(JOptionPane.showInputDialog(null, "Ingrese el número de cuarto a hospedar:"));
-        String fechadeIngreso = JOptionPane.showInputDialog(null, "Ingrese la fecha de ingreso del hospedaje:");
-        int numDiasHospedaje = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese los días de hospedaje:"));
-        String lugardeorigen = JOptionPane.showInputDialog(null, "Ingrese la nacionalidad del cliente:");
-        String observaciones = JOptionPane.showInputDialog(null, "Ingrese las observaciones:");
-        Hospedaje hospedaje = new Hospedaje(numHospedaje, fechadeIngreso, numDiasHospedaje, lugardeorigen,
-                observaciones);
-        gestorHabitaciones.registrarHospedaje(hospedaje);
-        cambiarEstadoHabitacion(numHospedaje);
-        JOptionPane.showMessageDialog(null, "Hospedaje registrado exitosamente.");
-        JOptionPane.showMessageDialog(null, "Datos del hospedaje\n"
-        + "Habitacion :" + numHospedaje 
-        + "\n Fecha de ingreso :" + numDiasHospedaje
-        + "\n Lugar de origen :" + lugardeorigen
-        + "\n Observaciones :" + observaciones 
-        );
-        JOptionPane.showMessageDialog(null, "Datos del cliente" + cliente.toString());
-        
+        if (habitacion != null) {
+            int numHospedaje = habitacion.getNumero();
+            String fechadeIngreso = JOptionPane.showInputDialog(null, "Ingrese la fecha de ingreso del hospedaje:");
+            int numDiasHospedaje = Integer
+                    .parseInt(JOptionPane.showInputDialog(null, "Ingrese los días de hospedaje:"));
+            String lugardeorigen = JOptionPane.showInputDialog(null, "Ingrese la nacionalidad del cliente:");
+            String observaciones = JOptionPane.showInputDialog(null, "Ingrese las observaciones:");
+            String dnicliente = cliente.getDni();
+            System.out.println(dnicliente);
+            Hospedaje hospedaje = new Hospedaje(numHospedaje, fechadeIngreso, numDiasHospedaje, lugardeorigen,
+                    observaciones);
+            gestorHabitaciones.registrarHospedaje(hospedaje);
+            cambiarEstadoHabitacion(numHospedaje);
+            JOptionPane.showMessageDialog(null, "Hospedaje registrado exitosamente.");
+
+            // Mostrar los datos del hospedaje registrado
+            JOptionPane.showMessageDialog(null, "Datos del hospedaje:\n"
+                    + "Habitación: " + numHospedaje + "\n"
+                    + "Fecha de ingreso: " + fechadeIngreso + "\n"
+                    + "Días de hospedaje: " + numDiasHospedaje + "\n"
+                    + "Lugar de origen: " + lugardeorigen + "\n"
+                    + "Observaciones: " + observaciones);
+            // Mostrar datos del cliente
+            JOptionPane.showMessageDialog(null, "Datos del cliente:\n" + cliente.toString() + "\n");
+            // Mostrar datos de la habitacion
+            JOptionPane.showMessageDialog(null, "Datos de la habitación:\n" + habitacion.toString() + "\n");
+
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo registrar el hospedaje. La habitación no existe.");
+        }
     }
+
 }

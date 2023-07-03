@@ -23,14 +23,13 @@ public class GestorHabitaciones {
     private List<Cliente> clientes;
     private List<Hospedaje> hospedajes;
 
-    // Constructor
     public GestorHabitaciones() {
         habitaciones = new ArrayList<>();
         clientes = new ArrayList<>();
         hospedajes = new ArrayList<>();
         cargarDatosDesdeCSV();
         cargarDatosClientesDesdeCSV();
-
+        cargarDatosHospedajeDesdeCSV();
     }
 
     // Método para cargar los datos desde el archivo CSV
@@ -250,6 +249,7 @@ public class GestorHabitaciones {
     }
 
     ////// hospedaje
+
     private void cargarDatosHospedajeDesdeCSV() {
         BufferedReader br = null;
         String line;
@@ -281,7 +281,7 @@ public class GestorHabitaciones {
             }
         }
     }
-    
+
     private void guardarDatosHospedajeEnCSV() {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(ARCHIVO_CSV_HOSPEDAJES))) {
             for (Hospedaje hospedaje : hospedajes) {
@@ -296,11 +296,20 @@ public class GestorHabitaciones {
             e.printStackTrace();
         }
     }
-    //crear hospedaje
+
+    // crear hospedaje
     public void registrarHospedaje(Hospedaje hospedaje) {
         hospedajes.add(hospedaje);
         guardarDatosHospedajeEnCSV();
     }
-    //mostrar hospedaje
-    
+
+    // mostrar hospedaje
+    public void consultarHospedaje() {
+        String listadodehuespedes = "";
+        for (Hospedaje hospedaje : hospedajes) {
+            listadodehuespedes += hospedaje.toString() + "\n";
+        }
+
+        JOptionPane.showMessageDialog(null, listadodehuespedes);
+    }
 }
