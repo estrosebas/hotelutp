@@ -15,9 +15,9 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 public class GestorHabitaciones {
-    private static final String ARCHIVO_CSV = "habitaciones.csv";
-    private static final String ARCHIVO_CSV_HOSPEDAJES = "hospedajes.csv";
-    private static final String ARCHIVO_CSV_CLIENTES = "clientes.csv";
+    private static final String ARCHIVO_CSV = "hotelutp/habitaciones.csv";
+    private static final String ARCHIVO_CSV_HOSPEDAJES = "hotelutp/hospedajes.csv";
+    private static final String ARCHIVO_CSV_CLIENTES = "hotelutp/clientes.csv";
     // private static final String ARCHIVO_CSV_CLIENTES = "ARCHIVO_CLIENTES_CSV";
     private List<Habitacion> habitaciones;
     private List<Cliente> clientes;
@@ -254,7 +254,7 @@ public class GestorHabitaciones {
         BufferedReader br = null;
         String line;
         try {
-            br = new BufferedReader(new FileReader("hospedajes.csv"));
+            br = new BufferedReader(new FileReader(ARCHIVO_CSV_HOSPEDAJES));
             while ((line = br.readLine()) != null) {
                 String[] data = line.split(",");
                 int numHospedaje = Integer.parseInt(data[0]);
