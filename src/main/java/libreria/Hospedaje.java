@@ -14,14 +14,16 @@ public class Hospedaje {
     private int numDiasHospedaje;
     private String lugardeorigen;
     private String observaciones;
+    private String dni;
 
-    public Hospedaje(int numHospedaje, String fechadeIngreso, int numDiasHospedaje, String lugardeorigen,
-            String observaciones) {
-        this.numHospedaje = numHospedaje;
-        this.fechadeIngreso = fechadeIngreso;
-        this.numDiasHospedaje = numDiasHospedaje;
-        this.lugardeorigen = lugardeorigen;
+    // Constructor
+    public Hospedaje(int numero, String fechaIngreso, int numDias, String lugarOrigen, String observaciones, String dniCliente) {
+        this.numHospedaje= numero;
+        this.fechadeIngreso = fechaIngreso;
+        this.numDiasHospedaje = numDias;
+        this.lugardeorigen = lugarOrigen;
         this.observaciones = observaciones;
+        this.dni = dniCliente;
     }
 
     public int getNumHospedaje() {
@@ -64,13 +66,21 @@ public class Hospedaje {
         this.observaciones = observaciones;
     }
 
-    // metodo para representar datos de cadena
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
+
     @Override
     public String toString() {
-        return "Numero de hospedaje : " + numHospedaje +
-                ", Fecha de ingreso : " + fechadeIngreso +
-                ", Dias de hospedaje : " + numDiasHospedaje +
-                ", Lugar de origen : " + lugardeorigen +
-                ", Observaciones : " + observaciones;
+        return "Numero de hospedaje: " + numHospedaje +
+                ", Fecha de ingreso: " + fechadeIngreso +
+                ", Dias de hospedaje: " + numDiasHospedaje +
+                ", Lugar de origen: " + lugardeorigen +
+                ", Observaciones: " + observaciones +
+                ", DNI: " + dni;
     }
 }

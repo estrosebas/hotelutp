@@ -346,7 +346,7 @@ public class Hotel {
     private static void registrarHospedaje() {
         Cliente cliente = buscarCliente();
         Habitacion habitacion = buscarHabitacion();
-
+        String dnicliente = cliente.getDni();
         if (habitacion != null) {
             int numHospedaje = habitacion.getNumero();
             String fechadeIngreso = JOptionPane.showInputDialog(null, "Ingrese la fecha de ingreso del hospedaje:");
@@ -354,10 +354,9 @@ public class Hotel {
                     .parseInt(JOptionPane.showInputDialog(null, "Ingrese los días de hospedaje:"));
             String lugardeorigen = JOptionPane.showInputDialog(null, "Ingrese la nacionalidad del cliente:");
             String observaciones = JOptionPane.showInputDialog(null, "Ingrese las observaciones:");
-            String dnicliente = cliente.getDni();
-            System.out.println(dnicliente);
+            
             Hospedaje hospedaje = new Hospedaje(numHospedaje, fechadeIngreso, numDiasHospedaje, lugardeorigen,
-                    observaciones);
+                    observaciones, dnicliente);
             gestorHabitaciones.registrarHospedaje(hospedaje);
             cambiarEstadoHabitacion(numHospedaje);
             JOptionPane.showMessageDialog(null, "Hospedaje registrado exitosamente.");
@@ -368,7 +367,8 @@ public class Hotel {
                     + "Fecha de ingreso: " + fechadeIngreso + "\n"
                     + "Días de hospedaje: " + numDiasHospedaje + "\n"
                     + "Lugar de origen: " + lugardeorigen + "\n"
-                    + "Observaciones: " + observaciones);
+                    + "Observaciones: " + observaciones + "\n"
+                    + "Dni: " + dnicliente);
             // Mostrar datos del cliente
             JOptionPane.showMessageDialog(null, "Datos del cliente:\n" + cliente.toString() + "\n");
             // Mostrar datos de la habitacion

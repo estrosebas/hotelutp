@@ -262,9 +262,10 @@ public class GestorHabitaciones {
                 int numDiasHospedaje = Integer.parseInt(data[2]);
                 String lugardeorigen = data[3];
                 String observaciones = data[4];
+                String dni = data[5];
 
                 Hospedaje hospedaje = new Hospedaje(numHospedaje, fechadeIngreso, numDiasHospedaje, lugardeorigen,
-                        observaciones);
+                        observaciones, dni);
                 hospedajes.add(hospedaje);
             }
         } catch (FileNotFoundException e) {
@@ -289,7 +290,8 @@ public class GestorHabitaciones {
                         hospedaje.getFechadeIngreso() + "," +
                         hospedaje.getNumDiasHospedaje() + "," +
                         hospedaje.getLugardeorigen() + "," +
-                        hospedaje.getObservaciones());
+                        hospedaje.getObservaciones() + "," +
+                        hospedaje.getDni());
                 bw.newLine();
             }
         } catch (IOException e) {
