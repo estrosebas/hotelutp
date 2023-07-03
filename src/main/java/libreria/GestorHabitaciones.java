@@ -281,11 +281,7 @@ public class GestorHabitaciones {
             }
         }
     }
-    /*  El método guardarDatosHospedajeEnCSV() se utiliza para guardar los datos de los hospedajes en un archivo CSV.  
-        La función comienza creando un objeto BufferedWriter para escribir en un archivo FileWriter. Se pasa como argumento el nombre del archivo CSV en el que se guardarán los datos. 
-        Luego, se itera sobre la lista de hospedajes y se escriben los datos de cada hospedaje en una línea del archivo CSV. Los datos se separan por comas y se concatenan utilizando el operador +. 
-        Finalmente, se captura cualquier excepción de tipo IOException que pueda ocurrir durante la escritura del archivo y se imprime la traza de la excepción. 
-        */
+    
     private void guardarDatosHospedajeEnCSV() {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(ARCHIVO_CSV_HOSPEDAJES))) {
             for (Hospedaje hospedaje : hospedajes) {
@@ -300,9 +296,11 @@ public class GestorHabitaciones {
             e.printStackTrace();
         }
     }
-
+    //crear hospedaje
     public void registrarHospedaje(Hospedaje hospedaje) {
         hospedajes.add(hospedaje);
         guardarDatosHospedajeEnCSV();
     }
+    //mostrar hospedaje
+    
 }
