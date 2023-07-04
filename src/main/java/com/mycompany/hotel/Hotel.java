@@ -14,7 +14,9 @@ import libreria.Cliente;
 //import libreria.cuartos;
 import libreria.GestorHabitaciones;
 import libreria.Habitacion;
+import libreria.HistorialHuspedes;
 import libreria.Hospedaje;
+
 
 import javax.swing.JOptionPane;
 
@@ -315,7 +317,7 @@ public class Hotel {
     }
 
     ///////////////////////////////// FIN CLIENTES//////////
-    // INICIO HOSPEDAJE//
+    ///////////////////////////////// INICIO HOSPEDAJE//
     private static void mostrarMenuHospedaje() {
         int opcionHospedaje = 0;
         do {
@@ -323,7 +325,7 @@ public class Hotel {
                     "===    Módulo Hospedaje    ===\n" +
                             "1. Registrar hospedaje\n" +
                             "2. Consultar Huespedes\n" +
-                            "2. Registrar salida de hospedaje\n" +
+                            "3. Registrar salida de hospedaje\n" +
                             "0. Salir\n" +
                             "Seleccione una opción: "));
 
@@ -332,7 +334,10 @@ public class Hotel {
                     registrarHospedaje();
                     break;
                 case 2:
-                    gestorHabitaciones.consultarHospedaje();    
+                    gestorHabitaciones.consultarHospedaje();
+                    break;
+                case 3:
+                    registrarsalidaHospedaje();
                     break;
                 case 0:
                     JOptionPane.showMessageDialog(null, "Volviendo al menú principal...");
@@ -344,7 +349,20 @@ public class Hotel {
     }
 
     private static void registrarHospedaje() {
-        Cliente cliente = buscarCliente();
+        Cliente cliente;
+        do {
+            cliente = buscarCliente();
+            if (cliente == null) {
+                // Verificar si se desea cancelar
+                String cancelarbusqueda = JOptionPane
+                        .showInputDialog("Oprima enter y intente nuevamente o ingrese 0 para cancelar");
+                if (cancelarbusqueda == "0") {
+                    JOptionPane.showMessageDialog(null, "Operación cancelada.");
+                    return; // Salir de la función
+                }
+            }
+        } while (cliente == null);
+        gestorHabitaciones.mostrarHabitacionesLibres();
         Habitacion habitacion = buscarHabitacion();
         String dnicliente = cliente.getDni();
         if (habitacion != null) {
@@ -354,7 +372,7 @@ public class Hotel {
                     .parseInt(JOptionPane.showInputDialog(null, "Ingrese los días de hospedaje:"));
             String lugardeorigen = JOptionPane.showInputDialog(null, "Ingrese la nacionalidad del cliente:");
             String observaciones = JOptionPane.showInputDialog(null, "Ingrese las observaciones:");
-            
+
             Hospedaje hospedaje = new Hospedaje(numHospedaje, fechadeIngreso, numDiasHospedaje, lugardeorigen,
                     observaciones, dnicliente);
             gestorHabitaciones.registrarHospedaje(hospedaje);
@@ -377,6 +395,79 @@ public class Hotel {
         } else {
             JOptionPane.showMessageDialog(null, "No se pudo registrar el hospedaje. La habitación no existe.");
         }
+    }
+
+    private static void registrarsalidaHospedaje() {
+        int opcionHospedaje = 0;
+        do {
+            opcionHospedaje = Integer.parseInt(JOptionPane.showInputDialog(
+                    "===    Registrar salida de huesped   ===\n" +
+                            "1. Buscar huesped por dni\n" +
+                            "2. Buscar huesped por habitacion\n" +
+                            "0. Salir\n" +
+                            "Seleccione una opción: "));
+
+            switch (opcionHospedaje) {
+                case 1:
+                    Hospedaje hospedajeDni = buscarHospedajeDni();
+                    insertarHistorial(hospedajeDni);
+                    gestorHabitaciones.eliminarHospedaje(hospedajeDni);
+                    break;
+                case 2:
+                    Hospedaje hospedajeHabitacion = buscarHospedajeHabitacion();
+                    insertarHistorial(hospedajeHabitacion);
+                    gestorHabitaciones.eliminarHospedaje(hospedajeHabitacion);
+                    break;
+                case 0:
+                    JOptionPane.showMessageDialog(null, "Volviendo al menú principal...");
+                    break;
+                default:
+                    JOptionPane.showMessageDialog(null, "Opción inválida. Intente nuevamente.");
+            }
+        } while (opcionHospedaje != 0);
+    }
+
+    private static Hospedaje buscarHospedajeDni() {
+        String dnicliente = JOptionPane.showInputDialog(null, "Ingrese el dni del huesped a buscar");
+        Hospedaje hospedaje = gestorHabitaciones.buscarHospedajeDni(dnicliente);
+        if (hospedaje != null) {
+            JOptionPane.showMessageDialog(null, "Huesped encontrado: \n" + hospedaje.toString());
+        } else {
+            JOptionPane.showMessageDialog(null, "El husped con el DNI ingresado no existe.");
+        }
+
+        return hospedaje; // Devolver lo encontrado
+    }
+
+    
+    private static Hospedaje buscarHospedajeHabitacion() {
+        int habitacion = Integer.parseInt(JOptionPane.showInputDialog(null, "Ingrese el numero de la habitacion del huesped a buscar"));
+        Hospedaje hospedaje = gestorHabitaciones.buscarHospedajeHabitacion(habitacion);
+        if (hospedaje != null) {
+            JOptionPane.showMessageDialog(null, "Habitacion del huesped encontrada: \n" + hospedaje.toString());
+        } else {
+            JOptionPane.showMessageDialog(null, "La habitacion del huesped ingresada no existe.");
+        }
+
+        return hospedaje; // Devolver lo encontrado
+    }
+
+    private static void insertarHistorial(Hospedaje hospedaje) {
+        String dni = hospedaje.getDni();
+        int habitacion = hospedaje.getNumHospedaje();
+        String fecha = JOptionPane.showInputDialog(null, "Ingrese la fecha de salida");
+        String hora = JOptionPane.showInputDialog(null, "Ingrese la hora de salida");
+        String comentario = JOptionPane.showInputDialog(null, "Ingrese un comentario");
+        HistorialHuspedes historialHuspedes = new HistorialHuspedes(dni, habitacion, fecha, hora, comentario);
+        cambiarEstadoHabitacion(habitacion);
+        gestorHabitaciones.registrarHistorial(historialHuspedes);
+        //calcular
+        int dias = hospedaje.getNumDiasHospedaje();
+        Habitacion Preciohabitacion = gestorHabitaciones.buscarHabitacion(habitacion);
+        Double precio = Preciohabitacion.getPrecio();
+        Double Totalpago = dias * precio;
+        JOptionPane.showMessageDialog(null, "El total a pagar por el hospedaje es: " + Totalpago);
+        JOptionPane.showMessageDialog(null, "La habitación ha sido insertada exitosamente.");
     }
 
 }

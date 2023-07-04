@@ -15,18 +15,21 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 public class GestorHabitaciones {
-    private static final String ARCHIVO_CSV = "hotelutp/habitaciones.csv";
-    private static final String ARCHIVO_CSV_HOSPEDAJES = "hotelutp/hospedajes.csv";
-    private static final String ARCHIVO_CSV_CLIENTES = "hotelutp/clientes.csv";
+    private static final String ARCHIVO_CSV = "habitaciones.csv";
+    private static final String ARCHIVO_CSV_HOSPEDAJES = "hospedajes.csv";
+    private static final String ARCHIVO_CSV_CLIENTES = "clientes.csv";
+    private static final String ARCHIVO_CSV_HISTORIALHUESPEDES = "historial.csv";
     // private static final String ARCHIVO_CSV_CLIENTES = "ARCHIVO_CLIENTES_CSV";
     private List<Habitacion> habitaciones;
     private List<Cliente> clientes;
     private List<Hospedaje> hospedajes;
+    private List<HistorialHuspedes> historialHuspedes;
 
     public GestorHabitaciones() {
         habitaciones = new ArrayList<>();
         clientes = new ArrayList<>();
         hospedajes = new ArrayList<>();
+        historialHuspedes = new ArrayList<>();
         cargarDatosDesdeCSV();
         cargarDatosClientesDesdeCSV();
         cargarDatosHospedajeDesdeCSV();
@@ -314,4 +317,61 @@ public class GestorHabitaciones {
 
         JOptionPane.showMessageDialog(null, listadodehuespedes);
     }
+
+    public void mostrarHabitacionesLibres() {
+        String listadodehabitaciones = "";
+        for (Habitacion habitacion : habitaciones) {
+            if (habitacion.getEstado().equals("libre")) {
+                listadodehabitaciones += habitacion.toString() + "\n";
+            }
+        }
+        JOptionPane.showMessageDialog(null, "Habitaciones libres\n" + listadodehabitaciones);
+    }
+
+    public Hospedaje buscarHospedajeDni(String dni) {
+        for (Hospedaje hospedaje : hospedajes) {
+            if (hospedaje.getDni().equals(dni)) {
+                return hospedaje;
+            }
+        }
+        return null;
+    }
+
+    public Hospedaje buscarHospedajeHabitacion(int numHospedaje) {
+        for (Hospedaje hospedaje : hospedajes) {
+            if (hospedaje.getNumHospedaje() == numHospedaje) {
+                return hospedaje;
+            }
+        }
+        return null;
+    }
+
+    public void eliminarHospedaje(Hospedaje hospedaje) {
+        if (hospedaje != null) {
+            hospedajes.remove(hospedaje);
+            guardarDatosHospedajeEnCSV(); // Corrección del método para guardar los datos de hospedaje
+        }
+    }
+
+    //////////////////////// salida huespedesdes
+    private void guardarDatosHuespedhistorialEnCSV() {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(ARCHIVO_CSV_HISTORIALHUESPEDES))) {
+            for (HistorialHuspedes historialHuespedes : historialHuspedes) {
+                bw.write(historialHuespedes.getDni() + "," +
+                        historialHuespedes.getHabitacion() + "," +
+                        historialHuespedes.getFecha() + "," +
+                        historialHuespedes.getHora() + "," +
+                        historialHuespedes.getComentario());
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void registrarHistorial(HistorialHuspedes historialHuespedes) {
+        historialHuspedes.add(historialHuespedes);
+        guardarDatosHuespedhistorialEnCSV();
+    }
+
 }
