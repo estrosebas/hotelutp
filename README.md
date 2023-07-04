@@ -1,49 +1,55 @@
-# Hotel Management System
+# Sistema de manejo Hotel
 
-Este es un sistema de gestión de hotel en desarrollo. Proporciona funcionalidades básicas para el mantenimiento de habitaciones y gestión de clientes. El sistema permite administrar habitaciones, realizar búsquedas, insertar, modificar y eliminar habitaciones. Además, ofrece la posibilidad de gestionar clientes, registrar nuevos clientes y realizar operaciones relacionadas con ellos.
+Este proyecto es una aplicación de gestión de un hotel, desarrollado en Java.
 
-## Funcionalidades actuales
+## Funcionalidades
 
-- Menú de Mantenimiento de Habitaciones:
-   - Mostrar habitaciones: muestra la lista de todas las habitaciones existentes en el hotel.
-   - Buscar habitación: busca una habitación específica por su número.
-   - Insertar habitación: agrega una nueva habitación al sistema con su número, tipo, precio y estado.
-   - Modificar habitación: permite modificar los atributos de una habitación existente.
-   - Eliminar habitación: elimina una habitación del sistema.
-- Menú de Gestión de Clientes:
-   - Mostrar clientes: muestra la lista de todos los clientes registrados en el hotel.
-   - Buscar cliente: busca un cliente específico por su identificación.
-   - Registrar cliente: permite registrar un nuevo cliente en el sistema proporcionando información personal.
-   - Modificar cliente: permite modificar los datos de un cliente existente.
-   - Eliminar cliente: elimina un cliente del sistema.
+El proyecto proporciona las siguientes funcionalidades:
 
-## Uso
+- Mantenimiento de Habitaciones:
+  - Mostrar habitaciones.
+  - Buscar habitación.
+  - Insertar habitación.
+  - Modificar habitación.
+  - Eliminar habitación.
 
-1. Clona este repositorio en tu máquina local:
+- Gestión de Clientes:
+  - Mostrar clientes.
+  - Buscar cliente.
+  - Registrar cliente.
+  - Modificar cliente.
+  - Eliminar cliente.
 
-   ```bash
-   git clone https://github.com/estrosebas/mantenimiento-habitaciones.git
-2. Abre el proyecto en tu entorno de desarrollo de Java preferido.
+- Módulo de Hospedaje:
+  - Registrar hospedaje.
+  - Consultar huéspedes.
+  - Registrar salida de hospedaje.
 
-3. Ejecuta la clase Hotel para iniciar la aplicación.
+## Instrucciones de Uso
 
-4. Sigue las instrucciones en la consola para utilizar las diferentes opciones del menú.
+1. Ejecuta la clase principal `Hotel.java`.
+2. Se mostrará un menú principal con diferentes opciones.
+3. Selecciona una opción para acceder a los diferentes módulos y funcionalidades.
+4. Sigue las instrucciones proporcionadas por el programa para interactuar con él.
 
-## Requisitos del sistema
+## Requisitos del Sistema
 
 - Java Development Kit (JDK) 8 o superior.
+- IDE de desarrollo Java, como Netbeans, Eclipse o IntelliJ IDEA.
 
-## Estructura del proyecto
+## Contribuciones
 
-- Habitacion.java: Clase que representa una habitación con sus atributos y métodos.
-- GestorHabitaciones.java: Clase que gestiona las operaciones de mantenimiento de las habitaciones y el archivo CSV.
-- Main.java: Clase principal que contiene el menú y las interacciones con el usuario.
+Las contribuciones al proyecto son bienvenidas. Si deseas contribuir, sigue estos pasos:
 
-## Autores 
+1. Haz un fork del repositorio.
+2. Crea una rama para tu contribución.
+3. Realiza las modificaciones y mejoras necesarias.
+4. Envía un pull request describiendo tus cambios.
 
-Diego Sebastian Gonzales Gomez - codificación
+## Autores
+
+- [Diego Sebastian Gonzales Gomez](https://github.com/estrosebas)
 
 ## Licencia
 
-Este proyecto está bajo la Licencia MIT.
-
+Este proyecto está bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE) para obtener más información.
