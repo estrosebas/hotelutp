@@ -4,14 +4,7 @@
  */
 package libreria;
 
-/**
- *
- * @author Sebas
- */
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.swing.JOptionPane;
 
 public class GestorHabitaciones {
@@ -20,16 +13,24 @@ public class GestorHabitaciones {
     private static final String ARCHIVO_CSV_CLIENTES = "clientes.csv";
     private static final String ARCHIVO_CSV_HISTORIALHUESPEDES = "historial.csv";
     // private static final String ARCHIVO_CSV_CLIENTES = "ARCHIVO_CLIENTES_CSV";
-    private List<Habitacion> habitaciones;
-    private List<Cliente> clientes;
-    private List<Hospedaje> hospedajes;
-    private List<HistorialHuspedes> historialHuspedes;
+    private Habitacion[] habitaciones;
+    private Cliente[] clientes;
+    private Hospedaje[] hospedajes;
+    private HistorialHuspedes[] historialHuspedes;
+    private int numHabitaciones;
+    private int numClientes;
+    private int numHospedajes;
+    private int numHistorialHuspedes;
 
     public GestorHabitaciones() {
-        habitaciones = new ArrayList<>();
-        clientes = new ArrayList<>();
-        hospedajes = new ArrayList<>();
-        historialHuspedes = new ArrayList<>();
+        habitaciones = new Habitacion[100]; // Tamaño inicial del arreglo
+        clientes = new Cliente[100]; // Tamaño inicial del arreglo
+        hospedajes = new Hospedaje[100]; // Tamaño inicial del arreglo
+        historialHuspedes = new HistorialHuspedes[100]; // Tamaño inicial del arreglo
+        numHabitaciones = 0;
+        numClientes = 0;
+        numHospedajes = 0;
+        numHistorialHuspedes = 0;
         cargarDatosDesdeCSV();
         cargarDatosClientesDesdeCSV();
         cargarDatosHospedajeDesdeCSV();
@@ -48,7 +49,8 @@ public class GestorHabitaciones {
                 double precio = Double.parseDouble(data[2]);
                 String estado = data[3];
                 Habitacion habitacion = new Habitacion(numero, tipo, precio, estado);
-                habitaciones.add(habitacion);
+                habitaciones[numHabitaciones] = habitacion;
+                numHabitaciones++;
             }
         } catch (FileNotFoundException e) {
             // El archivo no existe, se creará uno nuevo al guardar los datos
@@ -68,7 +70,8 @@ public class GestorHabitaciones {
     // Método para guardar los datos en el archivo CSV
     private void guardarDatosEnCSV() {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(ARCHIVO_CSV))) {
-            for (Habitacion habitacion : habitaciones) {
+            for (int i = 0; i < numHabitaciones; i++) {
+                Habitacion habitacion = habitaciones[i];
                 bw.write(habitacion.getNumero() + "," +
                         habitacion.getTipo() + "," +
                         habitacion.getPrecio() + "," +
@@ -83,7 +86,8 @@ public class GestorHabitaciones {
     // Método para mostrar la información de todas las habitaciones
     public void mostrarHabitaciones() {
         String listadodehabitaciones = "";
-        for (Habitacion habitacion : habitaciones) {
+        for (int i = 0; i < numHabitaciones; i++) {
+            Habitacion habitacion = habitaciones[i];
             listadodehabitaciones += habitacion.toString() + "\n";
         }
         JOptionPane.showMessageDialog(null, listadodehabitaciones);
@@ -91,7 +95,8 @@ public class GestorHabitaciones {
 
     // Método para buscar una habitación por número
     public Habitacion buscarHabitacion(int numero) {
-        for (Habitacion habitacion : habitaciones) {
+        for (int i = 0; i < numHabitaciones; i++) {
+            Habitacion habitacion = habitaciones[i];
             if (habitacion.getNumero() == numero) {
                 return habitacion;
             }
@@ -101,7 +106,8 @@ public class GestorHabitaciones {
 
     // Método para insertar una nueva habitación
     public void insertarHabitacion(Habitacion habitacion) {
-        habitaciones.add(habitacion);
+        habitaciones[numHabitaciones] = habitacion;
+        numHabitaciones++;
         guardarDatosEnCSV();
     }
 
@@ -121,10 +127,16 @@ public class GestorHabitaciones {
 
     // Método para eliminar una habitación existente
     public void eliminarHabitacion(int numero) {
-        Habitacion habitacion = buscarHabitacion(numero);
-        if (habitacion != null) {
-            habitaciones.remove(habitacion);
-            guardarDatosEnCSV();
+        for (int i = 0; i < numHabitaciones; i++) {
+            Habitacion habitacion = habitaciones[i];
+            if (habitacion.getNumero() == numero) {
+                for (int j = i; j < numHabitaciones - 1; j++) {
+                    habitaciones[j] = habitaciones[j + 1];
+                }
+                numHabitaciones--;
+                guardarDatosEnCSV();
+                break;
+            }
         }
     }
 
@@ -158,7 +170,8 @@ public class GestorHabitaciones {
 
                 Cliente cliente = new Cliente(dni, nombres, apellidos, direccion, sexo, fechaNacimiento, nacionalidad,
                         correo, celular);
-                clientes.add(cliente);
+                clientes[numClientes] = cliente;
+                numClientes++;
             }
         } catch (FileNotFoundException e) {
             // El archivo no existe, se creará uno nuevo al guardar los datos
@@ -178,7 +191,8 @@ public class GestorHabitaciones {
     // Método para guardar datos del clientes desde el csv
     private void guardarDatosClientesEnCSV() {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(ARCHIVO_CSV_CLIENTES))) {
-            for (Cliente cliente : clientes) {
+            for (int i = 0; i < numClientes; i++) {
+                Cliente cliente = clientes[i];
                 bw.write(cliente.getDni() + "," +
                         cliente.getNombres() + "," +
                         cliente.getApellidos() + "," +
@@ -197,14 +211,16 @@ public class GestorHabitaciones {
 
     public void mostrarClientes() {
         String Listaclientes = "";
-        for (Cliente cliente : clientes) {
+        for (int i = 0; i < numClientes; i++) {
+            Cliente cliente = clientes[i];
             Listaclientes += "DNI = " + cliente.getDni() + "\n";
         }
         JOptionPane.showMessageDialog(null, Listaclientes);
     }
 
     public Cliente buscarCliente(String dni) {
-        for (Cliente cliente : clientes) {
+        for (int i = 0; i < numClientes; i++) {
+            Cliente cliente = clientes[i];
             if (cliente.getDni().equals(dni)) {
                 return cliente;
             }
@@ -213,41 +229,44 @@ public class GestorHabitaciones {
     }
 
     public void registrarCliente(Cliente cliente) {
-        clientes.add(cliente);
+        clientes[numClientes] = cliente;
+        numClientes++;
         guardarDatosClientesEnCSV();
     }
 
     public void eliminarCliente(String dni) {
-        Cliente cliente = buscarCliente(dni);
-        if (cliente != null) {
-            clientes.remove(cliente);
-            guardarDatosClientesEnCSV();
-            System.out.println("El cliente ha sido eliminado exitosamente.");
-        } else {
-            System.out.println("El cliente no existe.");
+        for (int i = 0; i < numClientes; i++) {
+            Cliente cliente = clientes[i];
+            if (cliente.getDni().equals(dni)) {
+                for (int j = i; j < numClientes - 1; j++) {
+                    clientes[j] = clientes[j + 1];
+                }
+                numClientes--;
+                guardarDatosClientesEnCSV();
+                System.out.println("El cliente ha sido eliminado exitosamente.");
+                break;
+            }
         }
     }
 
     public void modificarCliente(String dni, String nuevoNombres, String nuevoApellidos, String nuevoDireccion,
             String nuevoSexo, String nuevoFechanacimiento, String nuevoNacionalidad, String nuevvoCorreo,
             String nuevoCelular) {
-        Cliente cliente = buscarCliente(dni);
-        if (cliente != null) {
-            // cliente.setTipo(tipo);
-            // cliente.setPrecio(precio);
-            // cliente.setEstado(estado);
-            cliente.setNombres(nuevoNombres);
-            cliente.setApellidos(nuevoApellidos);
-            cliente.setDireccion(nuevoDireccion);
-            cliente.setSexo(nuevoSexo);
-            cliente.setFechaNacimiento(nuevoFechanacimiento);
-            cliente.setNacionalidad(nuevoNacionalidad);
-            cliente.setCorreo(nuevvoCorreo);
-            cliente.setCelular(nuevoCelular);
-            guardarDatosClientesEnCSV();
-            System.out.println("El cliente ha sido modificada exitosamente.");
-        } else {
-            System.out.println("El cliente no existe.");
+        for (int i = 0; i < numClientes; i++) {
+            Cliente cliente = clientes[i];
+            if (cliente.getDni().equals(dni)) {
+                cliente.setNombres(nuevoNombres);
+                cliente.setApellidos(nuevoApellidos);
+                cliente.setDireccion(nuevoDireccion);
+                cliente.setSexo(nuevoSexo);
+                cliente.setFechaNacimiento(nuevoFechanacimiento);
+                cliente.setNacionalidad(nuevoNacionalidad);
+                cliente.setCorreo(nuevvoCorreo);
+                cliente.setCelular(nuevoCelular);
+                guardarDatosClientesEnCSV();
+                System.out.println("El cliente ha sido modificada exitosamente.");
+                break;
+            }
         }
     }
 
@@ -269,7 +288,8 @@ public class GestorHabitaciones {
 
                 Hospedaje hospedaje = new Hospedaje(numHospedaje, fechadeIngreso, numDiasHospedaje, lugardeorigen,
                         observaciones, dni);
-                hospedajes.add(hospedaje);
+                hospedajes[numHospedajes] = hospedaje;
+                numHospedajes++;
             }
         } catch (FileNotFoundException e) {
             // El archivo no existe, se creará uno nuevo al guardar los datos
@@ -288,7 +308,8 @@ public class GestorHabitaciones {
 
     private void guardarDatosHospedajeEnCSV() {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(ARCHIVO_CSV_HOSPEDAJES))) {
-            for (Hospedaje hospedaje : hospedajes) {
+            for (int i = 0; i < numHospedajes; i++) {
+                Hospedaje hospedaje = hospedajes[i];
                 bw.write(hospedaje.getNumHospedaje() + "," +
                         hospedaje.getFechadeIngreso() + "," +
                         hospedaje.getNumDiasHospedaje() + "," +
@@ -304,14 +325,16 @@ public class GestorHabitaciones {
 
     // crear hospedaje
     public void registrarHospedaje(Hospedaje hospedaje) {
-        hospedajes.add(hospedaje);
+        hospedajes[numHospedajes] = hospedaje;
+        numHospedajes++;
         guardarDatosHospedajeEnCSV();
     }
 
     // mostrar hospedaje
     public void consultarHospedaje() {
         String listadodehuespedes = "";
-        for (Hospedaje hospedaje : hospedajes) {
+        for (int i = 0; i < numHospedajes; i++) {
+            Hospedaje hospedaje = hospedajes[i];
             listadodehuespedes += hospedaje.toString() + "\n";
         }
 
@@ -320,7 +343,8 @@ public class GestorHabitaciones {
 
     public void mostrarHabitacionesLibres() {
         String listadodehabitaciones = "";
-        for (Habitacion habitacion : habitaciones) {
+        for (int i = 0; i < numHabitaciones; i++) {
+            Habitacion habitacion = habitaciones[i];
             if (habitacion.getEstado().equals("libre")) {
                 listadodehabitaciones += habitacion.toString() + "\n";
             }
@@ -329,7 +353,8 @@ public class GestorHabitaciones {
     }
 
     public Hospedaje buscarHospedajeDni(String dni) {
-        for (Hospedaje hospedaje : hospedajes) {
+        for (int i = 0; i < numHospedajes; i++) {
+            Hospedaje hospedaje = hospedajes[i];
             if (hospedaje.getDni().equals(dni)) {
                 return hospedaje;
             }
@@ -338,7 +363,8 @@ public class GestorHabitaciones {
     }
 
     public Hospedaje buscarHospedajeHabitacion(int numHospedaje) {
-        for (Hospedaje hospedaje : hospedajes) {
+        for (int i = 0; i < numHospedajes; i++) {
+            Hospedaje hospedaje = hospedajes[i];
             if (hospedaje.getNumHospedaje() == numHospedaje) {
                 return hospedaje;
             }
@@ -348,15 +374,24 @@ public class GestorHabitaciones {
 
     public void eliminarHospedaje(Hospedaje hospedaje) {
         if (hospedaje != null) {
-            hospedajes.remove(hospedaje);
-            guardarDatosHospedajeEnCSV(); // Corrección del método para guardar los datos de hospedaje
+            for (int i = 0; i < numHospedajes; i++) {
+                if (hospedajes[i] == hospedaje) {
+                    for (int j = i; j < numHospedajes - 1; j++) {
+                        hospedajes[j] = hospedajes[j + 1];
+                    }
+                    numHospedajes--;
+                    guardarDatosHospedajeEnCSV(); // Corrección del método para guardar los datos de hospedaje
+                    break;
+                }
+            }
         }
     }
 
     //////////////////////// salida huespedesdes
     private void guardarDatosHuespedhistorialEnCSV() {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(ARCHIVO_CSV_HISTORIALHUESPEDES))) {
-            for (HistorialHuspedes historialHuespedes : historialHuspedes) {
+            for (int i = 0; i < numHistorialHuspedes; i++) {
+                HistorialHuspedes historialHuespedes = historialHuspedes[i];
                 bw.write(historialHuespedes.getDni() + "," +
                         historialHuespedes.getHabitacion() + "," +
                         historialHuespedes.getFecha() + "," +
@@ -370,7 +405,8 @@ public class GestorHabitaciones {
     }
 
     public void registrarHistorial(HistorialHuspedes historialHuespedes) {
-        historialHuspedes.add(historialHuespedes);
+        historialHuspedes[numHistorialHuspedes] = historialHuespedes;
+        numHistorialHuspedes++;
         guardarDatosHuespedhistorialEnCSV();
     }
 
