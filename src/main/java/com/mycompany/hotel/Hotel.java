@@ -9,12 +9,7 @@ package com.mycompany.hotel;
  * @author Sebas
  */
 //import java.util.Scanner;
-/*
-import libreria.Cliente;
-import libreria.GestorHabitaciones;
-import libreria.Habitacion;
-import libreria.HistorialHuspedes;
-import libreria.Hospedaje;*/
+
 import libreria.*;
 import javax.swing.JOptionPane;
 
@@ -22,43 +17,46 @@ public class Hotel {
     private static GestorHabitaciones gestorHabitaciones = new GestorHabitaciones();
 
     public static void main(String[] args) {
-        // mostrarMenuHabitaciones();
+    String usuarioCorrecto = "Admin";
+    String contraseñaCorrecta = "Admin";
 
-        // contrasena;
-        String Contraseña = "Admin";
-        String opcionPass = "";
-        int opcionmenu = 0;
-        do {
-            try {
-                opcionmenu = Integer.parseInt(JOptionPane.showInputDialog(
-                        "=== Hotel UTP === \n" +
-                                "1. Ingresar contraseña\n" +
-                                "0. Salir\n" +
-                                "Seleccione una opción:"));
+    String usuarioIngresado = "";
+    String contraseñaIngresada = "";
 
-                switch (opcionmenu) {
-                    case 1:
-                        opcionPass = JOptionPane.showInputDialog("Ingrese la contraseña:");
-                        if (opcionPass.equals(Contraseña)) {
-                            // System.out.println("Acceso exitoso");
-                            JOptionPane.showMessageDialog(null, "Acceso exitoso");
-                            MenuGeneral();
-                        } else {
-                            // System.out.println("Contraseña incorrecta");
-                            JOptionPane.showMessageDialog(null, "Contraseña incorrecta");
-                        }
-                        break;
-                    case 0:
-                        JOptionPane.showMessageDialog(null, "¡Hasta luego!");
-                        break;
-                    default:
-                        JOptionPane.showMessageDialog(null, "Opción inválida. Intente nuevamente.");
-                }
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Opción inválida. Intente nuevamente.");
+    int opcionmenu = 0;
+    do {
+        try {
+            opcionmenu = Integer.parseInt(JOptionPane.showInputDialog(
+                    "=== Hotel UTP === \n" +
+                            "1. Ingresar\n" +
+                            "0. Salir\n" +
+                            "Seleccione una opción:"));
+
+            switch (opcionmenu) {
+                case 1:
+                    // Solicitar usuario y contraseña al usuario
+                    usuarioIngresado = JOptionPane.showInputDialog("Ingrese el usuario:");
+                    contraseñaIngresada = JOptionPane.showInputDialog("Ingrese la contraseña:");
+
+                    // Verificar si las credenciales son correctas
+                    if (usuarioIngresado.equals(usuarioCorrecto) && contraseñaIngresada.equals(contraseñaCorrecta)) {
+                        JOptionPane.showMessageDialog(null, "Acceso exitoso");
+                        MenuGeneral();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecta");
+                    }
+                    break;
+                case 0:
+                    JOptionPane.showMessageDialog(null, "¡Hasta luego!");
+                    break;
+                default:
+                    JOptionPane.showMessageDialog(null, "Opción inválida. Intente nuevamente.");
             }
-        } while (opcionmenu != 0);
-    }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Opción inválida. Intente nuevamente.");
+        }
+    } while (opcionmenu != 0);
+}
 
     private static void MenuGeneral() {
         int MenuGeneralOption = 0;
